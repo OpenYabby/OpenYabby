@@ -1,0 +1,110 @@
+name: Bug report
+description: Report something that isn't working
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report! Please fill in as much as you can — the more context, the faster we can help.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Tell us what you saw, and what you expected to see instead.
+      placeholder: |
+        I said "Yabby, create a new project" and …
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps that consistently trigger the issue.
+      placeholder: |
+        1. Run `./setup.sh`
+        2. Open http://localhost:3000
+        3. Say "Yabby"
+        4. ...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: OpenYabby version / commit
+      description: Output of `git rev-parse --short HEAD` or the release tag you're on.
+      placeholder: "v0.1.0 or 6f3be0b"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface where the bug occurred
+      options:
+        - Voice (browser)
+        - Web chat
+        - Discord
+        - Slack
+        - Telegram
+        - WhatsApp
+        - Signal
+        - Task runner / spawner
+        - Setup / install
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: runner
+    attributes:
+      label: CLI runner in use
+      options:
+        - Claude Code (default)
+        - Codex
+        - Aider
+        - Goose
+        - Cline
+        - Continue
+        - N/A
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: OS / version
+      placeholder: "macOS 14.5 (Sonoma) on Apple Silicon"
+    validations:
+      required: true
+
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      placeholder: "v20.11.1"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: |
+        Paste the relevant lines from `logs/{taskId}-activity.log`, `logs/{taskId}-raw.log`, the server console, or the browser console. **Redact any secrets first.**
+      render: shell
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I searched existing issues and didn't find a duplicate.
+          required: true
+        - label: I checked the [Troubleshooting](../blob/main/README.md#troubleshooting) section.
+          required: true
+        - label: My logs do not contain secrets (API keys, tokens, credentials).
+          required: true

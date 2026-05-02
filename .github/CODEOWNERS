@@ -1,0 +1,3 @@
+# Default owner for everything in the repo.
+# Required reviewer on all PRs touching these paths.
+*       @idovmamane

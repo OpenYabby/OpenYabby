@@ -1,0 +1,83 @@
+{
+  "name": "openyabby",
+  "version": "0.1.0",
+  "description": "Voice-driven multi-agent assistant — Realtime API + CLI runners + multi-channel orchestration.",
+  "license": "MIT",
+  "author": "Idov Mamane",
+  "homepage": "https://openyabby.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenYabby/OpenYabby.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OpenYabby/OpenYabby/issues"
+  },
+  "keywords": [
+    "voice",
+    "ai",
+    "agents",
+    "multi-agent",
+    "openai",
+    "claude",
+    "realtime",
+    "webrtc",
+    "assistant",
+    "automation"
+  ],
+  "type": "module",
+  "scripts": {
+    "start": "node --max-old-space-size=8192 --expose-gc server.js",
+    "speaker": "cd speaker && bash start.sh",
+    "imagegen": "cd imagegen && bash start.sh",
+    "services": "bash scripts/ensure-services.sh",
+    "cleanup": "bash scripts/cleanup-zombies.sh",
+    "reset": "node scripts/reset-yabby.js",
+    "dev": "npm run services && concurrently --names \"NODE,SPEAKER,IMAGEGEN\" --prefix-colors \"cyan,magenta,yellow\" \"npm start\" \"npm run speaker\" \"npm run imagegen\"",
+    "start:all": "npm run dev",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:headed": "playwright test --headed"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.91.1",
+    "@azure/identity": "^4.13.1",
+    "@azure/search-documents": "^12.2.0",
+    "@cloudflare/workers-types": "^4.20260426.1",
+    "@google/genai": "^1.50.1",
+    "@langchain/core": "^1.1.42",
+    "@mistralai/mistralai": "^1.15.1",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@napi-rs/canvas": "^0.1.100",
+    "@qdrant/js-client-rest": "^1.17.0",
+    "@slack/bolt": "^4.7.1",
+    "@supabase/supabase-js": "^2.105.1",
+    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "better-sqlite3": "^12.8.0",
+    "cloudflare": "^5.2.0",
+    "cors": "^2.8.5",
+    "cron-parser": "^5.5.0",
+    "discord.js": "^14.26.3",
+    "dotenv": "^17.4.2",
+    "express": "^4.21.2",
+    "grammy": "^1.42.0",
+    "groq-sdk": "^1.1.2",
+    "link-preview-js": "^3.2.0",
+    "mem0ai": "^2.4.6",
+    "mime-types": "^3.0.2",
+    "multer": "^2.1.1",
+    "neo4j-driver": "^6.0.1",
+    "ollama": "^0.6.3",
+    "pdfjs-dist": "^5.7.284",
+    "pg": "^8.13.1",
+    "pino": "^10.3.1",
+    "redis": "^4.7.0",
+    "ws": "^8.20.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "concurrently": "^9.2.1",
+    "vitest": "^4.1.5"
+  }
+}

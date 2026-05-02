@@ -1,0 +1,4 @@
+# False positive: French UI label "Afficher/masquer" (show/hide password
+# toggle) flagged by the generic-api-key entropy rule because of its length.
+# It is a translation string in public/locales/fr.json — not a secret.
+9aa8cb111f3bd87f70fe6fd273af1f89a207e27a:public/locales/fr.json:generic-api-key:270

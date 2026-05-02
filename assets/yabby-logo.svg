@@ -1,0 +1,50 @@
+<svg viewBox="-34 4 208 140" width="200" height="90" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g style="filter: drop-shadow(0 3px 10px rgba(139, 92, 246, 0.16)) drop-shadow(0 1px 4px rgba(139, 92, 246, 0.08)) drop-shadow(0 0 20px rgba(167, 139, 250, 0.05));">
+  <ellipse cx="70" cy="75" rx="34" ry="34" fill="url(#glowGrad)" opacity="0.35"/>
+  <ellipse cx="70" cy="128" rx="11" ry="5.5" fill="#6d28d9" opacity="0.3"/>
+  <rect x="57" y="112" width="26" height="14" rx="7" fill="#6d28d9" opacity="0.7"/>
+  <ellipse cx="70" cy="82" rx="28" ry="32" fill="url(#shellGrad)"/>
+  <ellipse cx="70" cy="82" rx="28" ry="32" fill="url(#shimmerGrad)" class="shell-shimmer"/>
+  <ellipse cx="62" cy="70" rx="10" ry="14" fill="white" opacity="0.05"/>
+  <g class="yabby-claw-l">
+    <path d="M42 72 Q28 62 18 56" stroke="#8b5cf6" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <ellipse cx="14" cy="50" rx="13" ry="9" fill="#a78bfa" transform="rotate(-15 14 50)"/>
+    <ellipse cx="10" cy="46" rx="7" ry="5" fill="#c4b5fd" transform="rotate(-15 10 46)"/>
+  </g>
+  <g class="yabby-claw-r">
+    <path d="M98 72 Q112 62 122 56" stroke="#8b5cf6" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <ellipse cx="126" cy="50" rx="13" ry="9" fill="#a78bfa" transform="rotate(15 126 50)"/>
+    <ellipse cx="130" cy="46" rx="7" ry="5" fill="#c4b5fd" transform="rotate(15 130 46)"/>
+  </g>
+  <path d="M58 54 Q54 42 49 36" stroke="#7c3aed" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M82 54 Q86 42 91 36" stroke="#7c3aed" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <circle cx="46" cy="32" r="11" fill="white"/>
+  <circle cx="94" cy="32" r="11" fill="white"/>
+  <circle class="yabby-pupil" cx="49" cy="31" r="6" fill="#2d1b69" transform="translate(0.4971169654975733, 2.450076472809468)"/>
+  <circle class="yabby-pupil" cx="91" cy="31" r="6" fill="#2d1b69" transform="translate(0.4971169654975733, 2.450076472809468)"/>
+  <circle cx="46" cy="27.5" r="3" fill="white" opacity="0.95"/>
+  <circle cx="88" cy="27.5" r="3" fill="white" opacity="0.95"/>
+  <circle cx="52" cy="34" r="1.2" fill="white" opacity="0.5"/>
+  <circle cx="94" cy="34" r="1.2" fill="white" opacity="0.5"/>
+  <ellipse cx="35" cy="41" rx="5" ry="3" fill="#f9a8d4" opacity="0.18"/>
+  <ellipse cx="105" cy="41" rx="5" ry="3" fill="#f9a8d4" opacity="0.18"/>
+  <path d="M61 55 Q70 61 79 55" stroke="#c4b5fd" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.3"/>
+  </g>
+  <defs>
+    <linearGradient id="shellGrad" x1="70" y1="50" x2="70" y2="114" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="shimmerGrad" x1="0" y1="0" x2="140" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0"/>
+      <stop offset="45%" stop-color="#f0abfc" stop-opacity="0.08"/>
+      <stop offset="55%" stop-color="#e0f2fe" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glowGrad" cx="70" cy="75" r="34" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

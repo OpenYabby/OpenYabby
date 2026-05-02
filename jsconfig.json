@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "es2022",
+    "moduleResolution": "node",
+    "target": "es2022",
+    "checkJs": false,
+    "baseUrl": ".",
+    "paths": {
+      "#lib/*": ["./lib/*"],
+      "#db/*": ["./db/*"],
+      "#routes/*": ["./routes/*"]
+    }
+  },
+  "include": ["**/*.js"],
+  "exclude": ["node_modules", "public"]
+}

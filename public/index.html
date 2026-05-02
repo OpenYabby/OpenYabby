@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenYabby</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1 2 22 20' fill='none' stroke='%238b5cf6' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 18c-1 0-2-.5-2.5-1.5L8 14c-.5-1-.3-2 .3-2.5'/%3E%3Cpath d='M12 18c1 0 2-.5 2.5-1.5L16 14c.5-1 .3-2-.3-2.5'/%3E%3Cellipse cx='12' cy='11' rx='2.5' ry='3.5'/%3E%3Cpath d='M7.5 8.5C6 7.5 4.5 7 3.5 7.5c-.5.3-.3 1 .5 1.5l2.5 1.5'/%3E%3Cpath d='M16.5 8.5C18 7.5 19.5 7 20.5 7.5c.5.3.3 1-.5 1.5L17.5 10.5'/%3E%3Cpath d='M10.5 8C9.5 6 8 4.5 7 4' opacity='.6'/%3E%3Cpath d='M13.5 8C14.5 6 16 4.5 17 4' opacity='.6'/%3E%3Cpath d='M10.5 18.5c-.5 1-1 1.8-1.5 2' opacity='.5'/%3E%3Cpath d='M12 19c0 .8 0 1.5 0 2' opacity='.5'/%3E%3Cpath d='M13.5 18.5c.5 1 1 1.8 1.5 2' opacity='.5'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/voice.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="/vendor/ort.wasm.min.js"></script>
+  <script>ort.env.wasm.wasmPaths = "/vendor/";</script>
+  <script src="/vendor/bundle.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- ═══ Topbar ═══ -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-logo-group" data-navigate="/">
+          <!-- Subtle crayfish silhouette as brand mark -->
+          <svg class="topbar-logo-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Stylized crayfish: body + two claws + tail fan -->
+            <path d="M12 18c-1 0-2-.5-2.5-1.5L8 14c-.5-1-.3-2 .3-2.5"/>
+            <path d="M12 18c1 0 2-.5 2.5-1.5L16 14c.5-1 .3-2-.3-2.5"/>
+            <ellipse cx="12" cy="11" rx="2.5" ry="3.5"/>
+            <!-- Claws -->
+            <path d="M7.5 8.5C6 7.5 4.5 7 3.5 7.5c-.5.3-.3 1 .5 1.5l2.5 1.5"/>
+            <path d="M16.5 8.5C18 7.5 19.5 7 20.5 7.5c.5.3.3 1-.5 1.5L17.5 10.5"/>
+            <!-- Antennae -->
+            <path d="M10.5 8C9.5 6 8 4.5 7 4" opacity=".6"/>
+            <path d="M13.5 8C14.5 6 16 4.5 17 4" opacity=".6"/>
+            <!-- Tail fan -->
+            <path d="M10.5 18.5c-.5 1-1 1.8-1.5 2" opacity=".5"/>
+            <path d="M12 19c0 .8 0 1.5 0 2" opacity=".5"/>
+            <path d="M13.5 18.5c.5 1 1 1.8 1.5 2" opacity=".5"/>
+          </svg>
+          <span class="topbar-logo">OpenYabby</span>
+        </div>
+        <div class="topbar-breadcrumb" id="breadcrumb">
+          <span data-i18n="sidebar.dashboard">Dashboard</span>
+        </div>
+      </div>
+      <div class="topbar-center">
+        <div class="topbar-search-wrap">
+          <svg class="search-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14.5 14.5"/></svg>
+          <input class="topbar-search" type="search" placeholder="Rechercher... (Ctrl+/)" data-i18n-placeholder="topbar.searchPlaceholder" id="globalSearch" aria-label="Global search" autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false" name="yabby-search-nofill">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-sysstats" id="sysStats" title="System load · Running · Paused">
+          <div class="sysstat" title="CPU load">
+            <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2.5" y="2.5" width="11" height="11" rx="1.5"/>
+              <rect x="5" y="5" width="6" height="6" rx="0.5"/>
+              <path d="M5 1v2M8 1v2M11 1v2M5 13v2M8 13v2M11 13v2M1 5h2M1 8h2M1 11h2M13 5h2M13 8h2M13 11h2"/>
+            </svg>
+            <span class="sysstat-val" id="sysCpu">—</span>
+          </div>
+          <div class="sysstat-divider"></div>
+          <div class="sysstat" title="RAM">
+            <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="12" height="6" rx="1"/>
+              <path d="M5 5v6M8 5v6M11 5v6"/>
+              <path d="M4 3v2M12 3v2M4 11v2M12 11v2"/>
+            </svg>
+            <span class="sysstat-val" id="sysRam">—</span>
+          </div>
+          <div class="sysstat-divider"></div>
+          <div class="sysstat" title="Running tasks">
+            <span class="sysstat-dot running"></span>
+            <span class="sysstat-val" id="sysRunning">0</span>
+          </div>
+          <div class="sysstat" title="Paused tasks">
+            <span class="sysstat-dot paused"></span>
+            <span class="sysstat-val" id="sysPaused">0</span>
+          </div>
+        </div>
+        <button class="topbar-llm-resume" id="llmResumeBtn" title="Reprendre les tâches en limite LLM" data-i18n-title="tasks.resumeLlmLimitTooltip" data-i18n-aria-label="tasks.resumeLlmLimitTooltip" style="display:none" aria-label="Reprendre tâches en pause limite LLM">
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 8a5.5 5.5 0 11-1.61-3.89"/>
+            <path d="M13.5 2v3h-3"/>
+          </svg>
+          <span class="llm-resume-badge" id="llmResumeBadge">0</span>
+        </button>
+        <div class="topbar-notifs" id="notifBell" title="Notifications" data-i18n-title="topbar.notifications">
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 1.5a4 4 0 014 4v3l1.5 2H2.5l1.5-2v-3a4 4 0 014-4z"/><path d="M6.5 12.5a1.5 1.5 0 003 0"/></svg>
+          <span class="notif-badge" id="notifBadge" style="display:none">0</span>
+        </div>
+        <div class="notif-dropdown" id="notifDropdown">
+          <div class="notif-dropdown-header">
+            <span class="notif-dropdown-title" id="notifDropdownTitle" data-i18n="topbar.notifications">Notifications</span>
+            <button class="btn btn-sm notif-mark-read" id="notifMarkAllRead" title="Tout marquer comme lu">
+              <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7l3 3 7-7"/></svg>
+            </button>
+          </div>
+          <div class="notif-dropdown-body" id="notifDropdownBody"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══ Sidebar ═══ -->
+    <nav class="sidebar">
+      <div class="sidebar-nav">
+        <a class="sidebar-item active" data-route="/" title="Dashboard">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="6" height="6" rx="1.5"/><rect x="10" y="2" width="6" height="3" rx="1"/><rect x="10" y="7" width="6" height="9" rx="1.5"/><rect x="2" y="10" width="6" height="6" rx="1.5"/></svg></span>
+          <span class="label">Dashboard</span>
+        </a>
+        <a class="sidebar-item" data-route="/activity" title="Activité">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 12 5 9 8 11 11 6 16 9"/><path d="M16 9v5H2V4"/></svg></span>
+          <span class="label">Activité</span>
+        </a>
+        <a class="sidebar-item" data-route="/projects" title="Projets">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="11" rx="2"/><path d="M6 5V3.5A1.5 1.5 0 017.5 2h3A1.5 1.5 0 0112 3.5V5"/></svg></span>
+          <span class="label">Projets</span>
+        </a>
+        <a class="sidebar-item" data-route="/tasks" title="Tâches">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l3 3 6-7"/><rect x="1" y="1" width="16" height="16" rx="3"/></svg></span>
+          <span class="label">Tâches</span>
+        </a>
+        <a class="sidebar-item" data-route="/simple-tasks" title="Tâches simples">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h10M4 5h10M4 13h6"/><path d="M14 12l1.5 1.5L14 15" stroke-width="1.5"/></svg></span>
+          <span class="label">Tâches simples</span>
+        </a>
+        <a class="sidebar-item" data-route="/agents" title="Agents">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="3"/><path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></span>
+          <span class="label">Agents</span>
+        </a>
+        <a class="sidebar-item" data-route="/scheduled-tasks" title="Planification">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="7"/><path d="M9 5v4l3 2"/></svg></span>
+          <span class="label">Planification</span>
+        </a>
+        <a class="sidebar-item" data-route="/channels" title="Canaux">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h4l2 3-2 3H2l2-3-2-3z"/><path d="M10 5h4l2 3-2 3h-4l2-3-2-3z"/><path d="M6 11h4"/></svg></span>
+          <span class="label">Canaux</span>
+        </a>
+        <a class="sidebar-item" data-route="/connectors" title="Connecteurs & MCP">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5" r="2"/><circle cx="13" cy="5" r="2"/><circle cx="9" cy="14" r="2"/><path d="M5 7v2.5a2 2 0 002 2h4a2 2 0 002-2V7"/><path d="M9 11.5V12"/></svg></span>
+          <span class="label">Connecteurs</span>
+        </a>
+
+        <a class="sidebar-item" data-route="/presentations" title="Presentations">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="14" height="10" rx="1.5"/><path d="M9 13v3"/><path d="M6 16h6"/><path d="M7 7l2 1.5L7 10"/></svg></span>
+          <span class="label">Presentations</span>
+        </a>
+        <div class="sidebar-spacer"></div>
+        <a class="sidebar-item" data-route="/settings" title="Paramètres">
+          <span class="icon"><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="2.5"/><path d="M9 1.5v2M9 14.5v2M1.5 9h2M14.5 9h2M3.1 3.1l1.4 1.4M13.5 13.5l1.4 1.4M3.1 14.9l1.4-1.4M13.5 4.5l1.4-1.4"/></svg></span>
+          <span class="label">Paramètres</span>
+        </a>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">
+        <svg viewBox="0 0 18 18" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg>
+      </button>
+    </nav>
+
+    <!-- ═══ Main content (rendered by router) ═══ -->
+    <main class="main-content" id="mainContent">
+      <!-- Views will be rendered here by the router -->
+    </main>
+
+    <!-- ═══ Voice Panel — fixed bottom-right orb only ═══ -->
+    <div class="voice-panel" id="voicePanel">
+      <div class="orb-container" id="orbContainer">
+        <div class="orb-wrapper">
+          <div class="orb idle" id="orb">
+            <div class="orb-ring orb-ring-1"></div>
+            <div class="orb-ring orb-ring-2"></div>
+            <div class="orb-ring orb-ring-3"></div>
+            <div class="orb-core">
+              <svg class="orb-crayfish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="11.5" rx="3" ry="4"/>
+                <path d="M7 8.5C5.5 7.5 4 6.8 3 7.2c-.6.3-.4 1.1.4 1.7l3 1.6"/>
+                <path d="M17 8.5C18.5 7.5 20 6.8 21 7.2c.6.3.4 1.1-.4 1.7l-3 1.6"/>
+                <path d="M3.4 7.2c-.3-.6 0-1 .5-.8" stroke-width="1"/>
+                <path d="M20.6 7.2c.3-.6 0-1-.5-.8" stroke-width="1"/>
+                <path d="M10 8C9 5.5 7.5 4 6.5 3.2" opacity=".7"/>
+                <path d="M14 8C15 5.5 16.5 4 17.5 3.2" opacity=".7"/>
+                <path d="M10 15.5c-.8 1.2-1.5 2.2-2 2.8" opacity=".6"/>
+                <path d="M12 16c0 1.2 0 2.2 0 3" opacity=".6"/>
+                <path d="M14 15.5c.8 1.2 1.5 2.2 2 2.8" opacity=".6"/>
+                <path d="M9.5 18.5c-.5.3-1 .4-1.2.2" stroke-width="1" opacity=".5"/>
+                <path d="M14.5 18.5c.5.3 1 .4 1.2.2" stroke-width="1" opacity=".5"/>
+                <circle cx="10.5" cy="9" r=".5" fill="currentColor" stroke="none" opacity=".6"/>
+                <circle cx="13.5" cy="9" r=".5" fill="currentColor" stroke="none" opacity=".6"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All chat windows (Yabby + agents) -->
+    <div class="agent-chats-container" id="agentChatsContainer"></div>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Modal backdrop -->
+    <div class="modal-backdrop" id="modalBackdrop">
+      <div class="modal" id="modalContent"></div>
+    </div>
+
+    <!-- Hidden audio for WebRTC -->
+    <audio id="remoteAudio" autoplay playsinline></audio>
+  </div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

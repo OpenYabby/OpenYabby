@@ -1,0 +1,85 @@
+# ═══════════════════════════════════════════════════════
+# YABBY — Docker Compose
+# ═══════════════════════════════════════════════════════
+# yabby + postgres + redis
+#
+# NOTE: Claude CLI cannot run inside Docker.
+# Option A (recommended): Run Docker for web/channels,
+#   local Yabby for task spawning. Share same PG + Redis.
+# Option B: Set TASKS_FORWARD_URL to forward task spawns
+#   to a local agent via HTTP.
+
+services:
+  yabby:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_DATABASE=yabby
+      - PG_USER=yabby
+      - PG_PASSWORD=yabby
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=yabby
+      - POSTGRES_USER=yabby
+      - POSTGRES_PASSWORD=yabby
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U yabby"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  speaker:
+    build:
+      context: ./speaker
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - speakerdata:/app/data
+    environment:
+      - SPEAKER_DATA_DIR=/app/data
+      - SPEAKER_THRESHOLD=0.25
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:3001/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:
+  speakerdata:
