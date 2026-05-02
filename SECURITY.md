@@ -68,6 +68,7 @@ OpenYabby ships with a few transitive vulnerabilities from upstream packages. No
 
 - **`protobufjs` prototype pollution (critical)** — pulled in via `@whiskeysockets/baileys` → `@whiskeysockets/libsignal-node`. Affects only the optional WhatsApp adapter. Tracking upstream fix.
 - **`path-to-regexp` ReDoS (high)** — pulled in via Express. Mitigated by the fact that Yabby does not expose route params to untrusted input in any current handler.
+- **`picomatch` ReDoS via extglob quantifiers (critical)** — pulled in transitively via several dev/build tooling chains. Not in any request-handling path; cannot be triggered by a remote attacker.
 - Several **moderate** advisories in `axios`, `follow-redirects`, `hono`, `langsmith`, `mem0ai`, `uuid`. Reviewed; none currently exploitable in Yabby's usage patterns.
 
 Run `npm audit` for the live picture. We'll bump these as upstream patches land.
