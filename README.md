@@ -22,12 +22,14 @@
   <a href="#faq">FAQ</a> •
   <a href="#development">Development</a> •
   <a href="#contributing">Contributing</a> •
+  <a href="https://discord.gg/rpUMhCeEUS">Discord</a> •
   <a href="#roadmap">Roadmap</a> •
   <a href="#license">License</a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
+  <a href="https://discord.gg/rpUMhCeEUS"><img src="https://img.shields.io/discord/1494844518699368628?label=Discord&logo=discord&logoColor=white&color=5865F2" alt="Discord" /></a>
   <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen" alt="Node" />
   <img src="https://img.shields.io/badge/platform-macOS-black" alt="Platform" />
   <img src="https://img.shields.io/badge/voice-WebRTC-orange" alt="Voice" />
