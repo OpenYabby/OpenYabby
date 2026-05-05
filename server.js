@@ -1277,6 +1277,11 @@ function isRecoverableError(err) {
   if (recoverableCodes.has(code)) return true;
   // undici "terminated" with no other code = same kind of issue
   if (err?.name === 'TypeError' && /terminated|fetch failed/i.test(err?.message || '')) return true;
+  // Baileys race: encrypted-stream temp file ('-enc') is unlinked or never flushed
+  // before the upload reads it. Surfaces as an async ENOENT inside the upload
+  // pipeline that escapes our try/catch around sendMessage. Recoverable —
+  // the send fails, but the bot stays up.
+  if (code === 'ENOENT' && /[/\\]T[/\\][^/\\]*-enc$/.test(err?.path || '')) return true;
   return false;
 }
 

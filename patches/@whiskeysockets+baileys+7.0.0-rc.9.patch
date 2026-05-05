@@ -1,3 +1,21 @@
+diff --git a/node_modules/@whiskeysockets/baileys/lib/Utils/messages-media.js b/node_modules/@whiskeysockets/baileys/lib/Utils/messages-media.js
+index 0d32dfb..876f5a5 100644
+--- a/node_modules/@whiskeysockets/baileys/lib/Utils/messages-media.js
++++ b/node_modules/@whiskeysockets/baileys/lib/Utils/messages-media.js
+@@ -355,6 +355,13 @@ export const encryptedStream = async (media, mediaType, { logger, saveOriginalFi
+         encFileWriteStream.write(mac);
+         encFileWriteStream.end();
+         originalFileStream?.end?.();
++        // Wait for the encrypted file to flush to disk before returning.
++        // Without this, a fast upload pipeline can open the temp file before
++        // the write stream has flushed, throwing ENOENT and crashing async.
++        await once(encFileWriteStream, 'finish');
++        if (originalFileStream) {
++            await once(originalFileStream, 'finish');
++        }
+         stream.destroy();
+         logger?.debug('encrypted data successfully');
+         return {
 diff --git a/node_modules/@whiskeysockets/baileys/lib/Utils/process-message.js b/node_modules/@whiskeysockets/baileys/lib/Utils/process-message.js
 index 7927483..d923f59 100644
 --- a/node_modules/@whiskeysockets/baileys/lib/Utils/process-message.js
