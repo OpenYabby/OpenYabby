@@ -235,20 +235,22 @@ async function resolveTaskId(args, agentId) {
  * Body: { toolName, args, context: { source: 'voice'|'channel', channel?: 'whatsapp' } }
  */
 router.post("/api/tools/execute", async (req, res) => {
-  const { toolName, args, context } = req.body;
+  const { toolName, tool, args, params, context } = req.body;
+  const resolvedTool = toolName || tool;
+  const resolvedArgs = args ?? params ?? {};
 
-  if (!toolName) {
+  if (!resolvedTool) {
     return res.status(400).json({ error: "toolName is required" });
   }
 
   const source = context?.source || 'unknown';
-  log(`[TOOL-EXECUTOR] ${toolName} called from ${source}${context?.channel ? ':' + context.channel : ''}`);
+  log(`[TOOL-EXECUTOR] ${resolvedTool} called from ${source}${context?.channel ? ':' + context.channel : ''}`);
 
   try {
-    const result = await dispatchTool(toolName, args || {}, context || {});
+    const result = await dispatchTool(resolvedTool, resolvedArgs, context || {});
     res.json(result);
   } catch (err) {
-    log(`[TOOL-EXECUTOR] Error executing ${toolName}:`, err.message);
+    log(`[TOOL-EXECUTOR] Error executing ${resolvedTool}:`, err.message);
     res.status(500).json({ error: err.message });
   }
 });
