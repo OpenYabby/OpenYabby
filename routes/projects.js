@@ -279,7 +279,7 @@ Your FINAL task — three steps:
    - exits 0 on success, non-zero with a clear last line on failure
    Run it once yourself to verify it works.
 
-2. Call create_presentation with:
+2. Call presentation_status FIRST to check if a presentation already exists for this project (it may have been created by an earlier auto-poke). If one exists, switch to presentation_update with whatever fields need refreshing and skip create_presentation. If none exists, call create_presentation with:
      project_name_or_id: "${req.params.id}"
      title: "${projectName} — Final Delivery Report"
      summary: <2-3 sentence executive summary: goal, what was built, current state>
