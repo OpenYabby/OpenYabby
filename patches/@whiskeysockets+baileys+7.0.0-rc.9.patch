@@ -1,0 +1,44 @@
+diff --git a/node_modules/@whiskeysockets/baileys/lib/Utils/process-message.js b/node_modules/@whiskeysockets/baileys/lib/Utils/process-message.js
+index 7927483..d923f59 100644
+--- a/node_modules/@whiskeysockets/baileys/lib/Utils/process-message.js
++++ b/node_modules/@whiskeysockets/baileys/lib/Utils/process-message.js
+@@ -360,14 +360,15 @@ const processMessage = async (message, { shouldProcessHistoryMsg, placeholderRes
+             });
+         };
+         const participantsIncludesMe = () => participants.find(jid => areJidsSameUser(meId, jid.phoneNumber)); // ADD SUPPORT FOR LID
++        const safeParseParticipants = (params) => (params || []).map((a) => { if (typeof a !== 'string') return null; try { return JSON.parse(a); } catch { /* New LID format: plain JID string like '143087355592894@lid' instead of JSON-encoded object. Synthesize the object Baileys expects. */ if (a.includes('@')) { return { phoneNumber: a, lid: a.endsWith('@lid') ? a : null, pn: a.endsWith('@s.whatsapp.net') ? a : null }; } logger?.debug?.({ raw: a, stubType: message.messageStubType }, 'unparseable participant stub parameter'); return null; } }).filter(Boolean);
+         switch (message.messageStubType) {
+             case WAMessageStubType.GROUP_PARTICIPANT_CHANGE_NUMBER:
+-                participants = message.messageStubParameters.map((a) => JSON.parse(a)) || [];
++                participants = safeParseParticipants(message.messageStubParameters);
+                 emitParticipantsUpdate('modify');
+                 break;
+             case WAMessageStubType.GROUP_PARTICIPANT_LEAVE:
+             case WAMessageStubType.GROUP_PARTICIPANT_REMOVE:
+-                participants = message.messageStubParameters.map((a) => JSON.parse(a)) || [];
++                participants = safeParseParticipants(message.messageStubParameters);
+                 emitParticipantsUpdate('remove');
+                 // mark the chat read only if you left the group
+                 if (participantsIncludesMe()) {
+@@ -377,18 +378,18 @@ const processMessage = async (message, { shouldProcessHistoryMsg, placeholderRes
+             case WAMessageStubType.GROUP_PARTICIPANT_ADD:
+             case WAMessageStubType.GROUP_PARTICIPANT_INVITE:
+             case WAMessageStubType.GROUP_PARTICIPANT_ADD_REQUEST_JOIN:
+-                participants = message.messageStubParameters.map((a) => JSON.parse(a)) || [];
++                participants = safeParseParticipants(message.messageStubParameters);
+                 if (participantsIncludesMe()) {
+                     chat.readOnly = false;
+                 }
+                 emitParticipantsUpdate('add');
+                 break;
+             case WAMessageStubType.GROUP_PARTICIPANT_DEMOTE:
+-                participants = message.messageStubParameters.map((a) => JSON.parse(a)) || [];
++                participants = safeParseParticipants(message.messageStubParameters);
+                 emitParticipantsUpdate('demote');
+                 break;
+             case WAMessageStubType.GROUP_PARTICIPANT_PROMOTE:
+-                participants = message.messageStubParameters.map((a) => JSON.parse(a)) || [];
++                participants = safeParseParticipants(message.messageStubParameters);
+                 emitParticipantsUpdate('promote');
+                 break;
+             case WAMessageStubType.GROUP_CHANGE_ANNOUNCE:
