@@ -48,6 +48,7 @@ export async function render(container) {
               <option value="all">${t('scheduledTasks.allTypes')}</option>
               <option value="interval">${t('scheduledTasks.interval')}</option>
               <option value="cron">${t('scheduledTasks.cron')}</option>
+              <option value="once">${t('scheduledTasks.once') || 'Une seule fois'}</option>
               <option value="manual">${t('scheduledTasks.manual')}</option>
             </select>
           </div>
@@ -250,11 +251,12 @@ function renderEditCard(task) {
         <select class="select" id="scEditType">
           <option value="interval" ${task.scheduleType === 'interval' ? 'selected' : ''}>${t('scheduledTasks.intervalType')}</option>
           <option value="cron" ${task.scheduleType === 'cron' ? 'selected' : ''}>${t('scheduledTasks.cronType')}</option>
+          <option value="once" ${task.scheduleType === 'once' ? 'selected' : ''}>${t('scheduledTasks.onceType') || 'Une seule fois (date précise)'}</option>
           <option value="manual" ${task.scheduleType === 'manual' ? 'selected' : ''}>${t('scheduledTasks.manualType')}</option>
         </select>
       </div>
       <div id="scEditScheduleFields">
-        ${renderScheduleFields(task.scheduleType, intervalVal, intervalUnit, config.cronExpression || config.cron || '')}
+        ${renderScheduleFields(task.scheduleType, intervalVal, intervalUnit, config.cronExpression || config.cron || '', config.runAt || config.run_at || '')}
       </div>
       <div class="sc-edit-row">
         <div class="form-group">
@@ -289,7 +291,7 @@ function renderEditCard(task) {
     </div>`;
 }
 
-function renderScheduleFields(type, intervalVal, intervalUnit, cronExpr) {
+function renderScheduleFields(type, intervalVal, intervalUnit, cronExpr, runAt) {
   if (type === 'interval') {
     return `
       <div class="sc-edit-row">
@@ -315,6 +317,23 @@ function renderScheduleFields(type, intervalVal, intervalUnit, cronExpr) {
         <div class="sc-edit-help">${t('scheduledTasks.cronHelp')}</div>
       </div>`;
   }
+  if (type === 'once') {
+    // Convert ISO timestamp to local datetime-local input format (YYYY-MM-DDTHH:mm)
+    let localValue = '';
+    if (runAt) {
+      const d = new Date(runAt);
+      if (!Number.isNaN(d.getTime())) {
+        const pad = (n) => String(n).padStart(2, '0');
+        localValue = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      }
+    }
+    return `
+      <div class="form-group">
+        <label class="form-label">${t('scheduledTasks.onceLabel') || 'Date et heure'}</label>
+        <input class="input" type="datetime-local" id="scEditRunAt" value="${esc(localValue)}">
+        <div class="sc-edit-help">${t('scheduledTasks.onceHelp') || 'La tâche se déclenche une seule fois puis ne se relance plus.'}</div>
+      </div>`;
+  }
   return `<div class="sc-edit-help" style="padding:var(--space-xs) 0;">${t('scheduledTasks.manualHelp')}</div>`;
 }
 
@@ -335,7 +354,7 @@ function bindCardEvents(grid) {
   if (typeSelect) {
     typeSelect.addEventListener('change', () => {
       const fields = document.getElementById('scEditScheduleFields');
-      if (fields) fields.innerHTML = renderScheduleFields(typeSelect.value, 1, 'hours', '');
+      if (fields) fields.innerHTML = renderScheduleFields(typeSelect.value, 1, 'hours', '', '');
     });
   }
 
@@ -389,6 +408,14 @@ function buildScheduleConfig() {
   }
   if (type === 'cron') {
     return { cronExpression: document.getElementById('scEditCron')?.value.trim() || '', timezone: 'Europe/Paris' };
+  }
+  if (type === 'once') {
+    // datetime-local input gives us a string like "2026-05-20T10:00" in the browser's local TZ.
+    // Convert to ISO so the server stores an unambiguous timestamp.
+    const raw = document.getElementById('scEditRunAt')?.value || '';
+    if (!raw) return { runAt: null };
+    const d = new Date(raw);
+    return { runAt: Number.isNaN(d.getTime()) ? null : d.toISOString() };
   }
   return {};
 }
@@ -582,5 +609,15 @@ function formatSchedule(type, config) {
     return `${t('scheduledTasks.every')} ${Math.round(ms / 60000)}${t('scheduledTasks.minutesAbbrev')}`;
   }
   if (type === 'cron') return config?.cronExpression || config?.cron || t('scheduledTasks.undefinedCron');
+  if (type === 'once') {
+    const runAt = config?.runAt || config?.run_at;
+    if (!runAt) return t('scheduledTasks.undefinedOnce') || 'Date non définie';
+    const d = new Date(runAt);
+    if (Number.isNaN(d.getTime())) return t('scheduledTasks.undefinedOnce') || 'Date non définie';
+    const formatted = d.toLocaleString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return d > new Date()
+      ? `${t('scheduledTasks.onceAt') || 'Le'} ${formatted}`
+      : `${t('scheduledTasks.onceDone') || 'Terminée'} (${formatted})`;
+  }
   return '?';
 }
