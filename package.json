@@ -1,6 +1,6 @@
 {
   "name": "openyabby",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Voice-driven multi-agent assistant — Realtime API + CLI runners + multi-channel orchestration.",
   "license": "MIT",
   "author": "Idov Mamane",
