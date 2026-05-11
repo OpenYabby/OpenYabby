@@ -59,47 +59,53 @@ async function resolveAgentChannels(agentId) {
   return channels;
 }
 
-async function dispatchMediaToAgent(assetId, mime, context) {
+function dispatchMediaToAgent(assetId, mime, context) {
+  // Fire-and-forget: the asset is stored synchronously by the caller; channel
+  // delivery (which can block on a hung Baileys/Telegram/Slack send) runs
+  // detached so the HTTP response returns immediately with the assetId.
+  // Errors are still logged via the inner try/catch; they just don't propagate.
   if (!assetId) return;
-  try {
-    const agentId = context?.agentId || context?.targetAgentId || "yabby-000000";
-    log(`[TOOL-MEDIA] Dispatching ${assetId} (${mime || 'unknown'}) for agent ${agentId}`);
+  (async () => {
+    try {
+      const agentId = context?.agentId || context?.targetAgentId || "yabby-000000";
+      log(`[TOOL-MEDIA] Dispatching ${assetId} (${mime || 'unknown'}) for agent ${agentId}`);
 
-    const agentChannels = await resolveAgentChannels(agentId);
-    if (agentChannels.length === 0) {
-      log(`[TOOL-MEDIA] No channels found for agent ${agentId}, skipping`);
-      return;
-    }
-
-    const { getChannel } = await import("../lib/channels/index.js");
-    const isGif = mime === "image/gif";
-    const isImage = mime && mime.startsWith("image/") && !isGif;
-    const isVideo = mime && mime.startsWith("video/");
-
-    for (const { channelName, chatId } of agentChannels) {
-      try {
-        const adapter = getChannel(channelName);
-        if (!adapter?.running) {
-          log(`[TOOL-MEDIA] ${channelName} not running, skipping`);
-          continue;
-        }
-        if (isGif && typeof adapter.sendAnimation === "function") {
-          await adapter.sendAnimation(chatId, { assetId });
-        } else if (isVideo && typeof adapter.sendVideo === "function") {
-          await adapter.sendVideo(chatId, { assetId });
-        } else if (isImage) {
-          await adapter.sendImage(chatId, { assetId });
-        } else {
-          await adapter.sendDocument(chatId, { assetId });
-        }
-        log(`[TOOL-MEDIA] ✅ Sent ${assetId} to ${channelName}:${chatId}`);
-      } catch (err) {
-        log(`[TOOL-MEDIA] ⚠ Failed on ${channelName}: ${err.message}`);
+      const agentChannels = await resolveAgentChannels(agentId);
+      if (agentChannels.length === 0) {
+        log(`[TOOL-MEDIA] No channels found for agent ${agentId}, skipping`);
+        return;
       }
+
+      const { getChannel } = await import("../lib/channels/index.js");
+      const isGif = mime === "image/gif";
+      const isImage = mime && mime.startsWith("image/") && !isGif;
+      const isVideo = mime && mime.startsWith("video/");
+
+      for (const { channelName, chatId } of agentChannels) {
+        try {
+          const adapter = getChannel(channelName);
+          if (!adapter?.running) {
+            log(`[TOOL-MEDIA] ${channelName} not running, skipping`);
+            continue;
+          }
+          if (isGif && typeof adapter.sendAnimation === "function") {
+            await adapter.sendAnimation(chatId, { assetId });
+          } else if (isVideo && typeof adapter.sendVideo === "function") {
+            await adapter.sendVideo(chatId, { assetId });
+          } else if (isImage) {
+            await adapter.sendImage(chatId, { assetId });
+          } else {
+            await adapter.sendDocument(chatId, { assetId });
+          }
+          log(`[TOOL-MEDIA] ✅ Sent ${assetId} to ${channelName}:${chatId}`);
+        } catch (err) {
+          log(`[TOOL-MEDIA] ⚠ Failed on ${channelName}: ${err.message}`);
+        }
+      }
+    } catch (err) {
+      log(`[TOOL-MEDIA] ⚠ dispatchMediaToAgent error: ${err.message}`);
     }
-  } catch (err) {
-    log(`[TOOL-MEDIA] ⚠ dispatchMediaToAgent error: ${err.message}`);
-  }
+  })();
 }
 
 // Yabby super-agent — default scope when no agent is explicitly in context
