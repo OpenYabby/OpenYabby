@@ -63,8 +63,9 @@ success "npm $(npm -v) detected"
 header "Infrastructure Mode"
 
 MODE="${1:-}"
-
+MODE_EXPLICIT=true
 if [ -z "$MODE" ]; then
+    MODE_EXPLICIT=false
     echo "How would you like to run PostgreSQL and Redis?"
     echo ""
     echo "  ${BOLD}1) docker${NC}  — Use Docker Compose (recommended, zero config)"
@@ -77,6 +78,27 @@ if [ -z "$MODE" ]; then
         *)         MODE="docker"; warn "Defaulting to docker mode" ;;
     esac
 fi
+
+# Returns first free TCP port >= $1 (max 100 attempts). Used to pre-fill
+# port prompts so the suggested default is actually usable.
+find_free_port() {
+    local start="$1"
+    local port="$start"
+    local max=$((start + 100))
+    while [ "$port" -lt "$max" ]; do
+        if ! lsof -i ":$port" &>/dev/null 2>&1; then
+            echo "$port"
+            return 0
+        fi
+        port=$((port + 1))
+    done
+    echo "$start"  # fallback — caller will see the conflict and decide
+}
+
+# Print who's listening on a port (first match), or empty if free.
+who_owns_port() {
+    lsof -i ":$1" -sTCP:LISTEN -P -n 2>/dev/null | awk 'NR==2 {print $1" (pid "$2")"}'
+}
 
 if [ "$MODE" = "docker" ]; then
     info "Mode: Docker Compose (PostgreSQL + Redis in containers)"
@@ -181,26 +203,60 @@ fi
 header "Starting Infrastructure"
 
 if [ "$MODE" = "docker" ]; then
-    # Check if local PG + Redis are already running on the target ports
-    PG_ALREADY_LOCAL=false
-    REDIS_ALREADY_LOCAL=false
+    # ── Port configuration ──
+    # If the user has services on the default Docker ports (5433/6380) — or even
+    # on 5432/6379 — we let them pick alternates instead of silently falling
+    # back to local mode. Env vars YABBY_PG_PORT / YABBY_REDIS_PORT skip the
+    # prompts (useful for CI / scripted setups).
+    header "Docker Port Configuration"
 
-    if lsof -i :5432 &>/dev/null 2>&1 && ! docker compose ps postgres --format '{{.State}}' 2>/dev/null | grep -q running; then
-        PG_ALREADY_LOCAL=true
-    fi
-    if lsof -i :6379 &>/dev/null 2>&1 && ! docker compose ps redis --format '{{.State}}' 2>/dev/null | grep -q running; then
-        REDIS_ALREADY_LOCAL=true
-    fi
+    DEFAULT_PG_PORT="${YABBY_PG_PORT:-$(find_free_port 5433)}"
+    DEFAULT_REDIS_PORT="${YABBY_REDIS_PORT:-$(find_free_port 6380)}"
 
-    if [ "$PG_ALREADY_LOCAL" = true ] && [ "$REDIS_ALREADY_LOCAL" = true ]; then
-        warn "PostgreSQL and Redis are already running locally on the default ports"
-        info "Skipping Docker — using local services instead"
-        MODE="local"
+    if [ -z "${YABBY_PG_PORT:-}" ] && [ -t 0 ]; then
+        local_pg_user=$(who_owns_port 5432)
+        [ -n "$local_pg_user" ] && info "Port 5432 in use by: $local_pg_user (your local Postgres — Docker won't touch it)"
+        read -rp "PostgreSQL host port [$DEFAULT_PG_PORT]: " input
+        YABBY_PG_PORT="${input:-$DEFAULT_PG_PORT}"
     else
-        info "Starting PostgreSQL + Redis via Docker Compose..."
+        YABBY_PG_PORT="$DEFAULT_PG_PORT"
+    fi
 
-        # Only start postgres and redis (not the yabby service — we run that natively)
-        docker compose up -d postgres redis
+    if [ -z "${YABBY_REDIS_PORT:-}" ] && [ -t 0 ]; then
+        local_redis_user=$(who_owns_port 6379)
+        [ -n "$local_redis_user" ] && info "Port 6379 in use by: $local_redis_user (your local Redis — Docker won't touch it)"
+        read -rp "Redis host port [$DEFAULT_REDIS_PORT]: " input
+        YABBY_REDIS_PORT="${input:-$DEFAULT_REDIS_PORT}"
+    else
+        YABBY_REDIS_PORT="$DEFAULT_REDIS_PORT"
+    fi
+
+    # Final conflict check on the chosen ports
+    for p in "$YABBY_PG_PORT" "$YABBY_REDIS_PORT"; do
+        if lsof -i ":$p" &>/dev/null 2>&1; then
+            owner=$(who_owns_port "$p")
+            error "Port $p is already in use by: ${owner:-unknown}"
+            echo "  Re-run with a free port:  YABBY_PG_PORT=<port> YABBY_REDIS_PORT=<port> ./setup.sh docker"
+            exit 1
+        fi
+    done
+
+    success "PostgreSQL → host port $YABBY_PG_PORT"
+    success "Redis      → host port $YABBY_REDIS_PORT"
+
+    export YABBY_PG_PORT YABBY_REDIS_PORT
+
+    # Sync the chosen ports into .env so the Node server connects to the
+    # containers (not whatever's on the default ports).
+    if [ -f ".env" ]; then
+        sed -i.bak "s|^PG_PORT=.*|PG_PORT=${YABBY_PG_PORT}|" .env
+        sed -i.bak "s|^REDIS_URL=.*|REDIS_URL=redis://localhost:${YABBY_REDIS_PORT}|" .env
+        rm -f .env.bak
+        info "Updated .env: PG_PORT=${YABBY_PG_PORT}, REDIS_URL=redis://localhost:${YABBY_REDIS_PORT}"
+    fi
+
+    info "Starting PostgreSQL + Redis via Docker Compose..."
+    docker compose up -d postgres redis
 
     info "Waiting for services to be healthy..."
     # Wait for PostgreSQL
@@ -229,7 +285,6 @@ if [ "$MODE" = "docker" ]; then
         sleep 1
     done
     success "Redis is ready"
-    fi
 
 elif [ "$MODE" = "local" ]; then
     # Local mode — validate connections

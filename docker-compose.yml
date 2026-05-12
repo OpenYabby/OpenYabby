@@ -35,7 +35,9 @@ services:
   postgres:
     image: postgres:16-alpine
     ports:
-      - "5432:5432"
+      # Host port is configurable to avoid conflicts with local Postgres.
+      # setup.sh prompts for it; defaults to 5433.
+      - "${YABBY_PG_PORT:-5433}:5432"
     environment:
       - POSTGRES_DB=yabby
       - POSTGRES_USER=yabby
@@ -51,7 +53,9 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      # Host port is configurable to avoid conflicts with local Redis.
+      # setup.sh prompts for it; defaults to 6380.
+      - "${YABBY_REDIS_PORT:-6380}:6379"
     volumes:
       - redisdata:/data
     healthcheck:
