@@ -53,7 +53,7 @@
     "@qdrant/js-client-rest": "^1.17.0",
     "@slack/bolt": "^4.7.1",
     "@supabase/supabase-js": "^2.105.1",
-    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "@whiskeysockets/baileys": "7.0.0-rc.9",
     "better-sqlite3": "^12.8.0",
     "cloudflare": "^5.2.0",
     "cors": "^2.8.5",
