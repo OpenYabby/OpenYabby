@@ -12,6 +12,7 @@ const pool = new Pool({
   database: process.env.PG_DATABASE || "yabby",
   user:     process.env.PG_USER || "yabby",
   password: process.env.PG_PASSWORD || "",
+  ssl:      process.env.PG_SSL === "true" ? { rejectUnauthorized: true } : false,
   max:      10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,
