@@ -6,6 +6,19 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.1.2] — 2026-05-13
+
+### Added
+
+- **OS-level tracking of `Bash run_in_background` jobs.** New `bg_tasks` table, PreToolUse hook that captures the host PID, and a watcher polling `kill -0` every 30s. When a bg job ends after the parent CLI has exited, the agent receives a `[BG_COMPLETED]` follow-up. Exposed via `GET /api/tasks/:id/bg-tasks` and `GET /api/agents/:id/bg-tasks`.
+
+### Fixed
+
+- **Lead looping "project done" after delivery.** The `plan_continuation` auto-poke now skips when an active presentation has `last_run_status='passed'`.
+- **Sub-agent completions not reaching the lead past Phase 1.** The orchestrator's `phase='discovery'` skip now also requires no approved plan — `task.phase` is never advanced, so leads were silently dropped after their first plan approval.
+- **Review pile-up on cascading sub-completions.** The orchestrator skips a new `orchestrator_review` when one is already `pending` or `processing` — the existing review already reads all pending inbox messages.
+- **Watchdog killed live bg jobs (regression from 0.1.1).** Removed the 10s `FINAL_OUTPUT` watchdog and the close-handler `SIGKILL` of the process group. Bg jobs now survive CLI exit; the watcher above detects completion via OS PID.
+
 ## [0.1.1] — 2026-05-09
 
 ### Added
