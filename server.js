@@ -877,7 +877,7 @@ async function startup() {
   }
 
   // Auto-run migrations if needed
-  for (const migFile of ["002_projects_agents.js", "003_skills_deps.js", "004_hierarchical.js", "005_chat_persistence.js", "006_scheduled_tasks.js", "007_config.js", "008_auth.js", "009_usage.js", "010_channels.js", "011_connectors.js", "012_plan_reviews.js", "013_project_questions.js", "014_presentations.js", "015_whatsapp_settings.js", "016_unique_agent_names.js", "017_agent_task_queue.js", "017_thread_bindings.js", "018_agent_whatsapp_groups.js", "019_deduplicate_whatsapp.js", "020_yabby_super_agent.js", "021_project_questions_queue.js", "022_task_speaker_context.js", "023_conversation_source.js", "024_llm_limit_tasks.js", "025_fix_agent_name_uniqueness.js", "026_task_phase.js", "027_qa_browser_session_skill.js", "028_cli_system_prompt.js", "029_agent_workspace_path.js", "030_plan_review_shown.js", "031_queue_task_title.js", "032_multi_agent_task_queue.js", "033_media_assets.js", "034_channel_pairings.js", "035_runner_session_parity.js", "036_agent_runner_sessions.js", "037_presentations_demo.js", "038_thread_owner.js", "039_channel_containers.js", "040_tasks_fk_set_null.js", "041_plan_review_pending_emission.js", "042_schedule_type_once.js"]) {
+  for (const migFile of ["002_projects_agents.js", "003_skills_deps.js", "004_hierarchical.js", "005_chat_persistence.js", "006_scheduled_tasks.js", "007_config.js", "008_auth.js", "009_usage.js", "010_channels.js", "011_connectors.js", "012_plan_reviews.js", "013_project_questions.js", "014_presentations.js", "015_whatsapp_settings.js", "016_unique_agent_names.js", "017_agent_task_queue.js", "017_thread_bindings.js", "018_agent_whatsapp_groups.js", "019_deduplicate_whatsapp.js", "020_yabby_super_agent.js", "021_project_questions_queue.js", "022_task_speaker_context.js", "023_conversation_source.js", "024_llm_limit_tasks.js", "025_fix_agent_name_uniqueness.js", "026_task_phase.js", "027_qa_browser_session_skill.js", "028_cli_system_prompt.js", "029_agent_workspace_path.js", "030_plan_review_shown.js", "031_queue_task_title.js", "032_multi_agent_task_queue.js", "033_media_assets.js", "034_channel_pairings.js", "035_runner_session_parity.js", "036_agent_runner_sessions.js", "037_presentations_demo.js", "038_thread_owner.js", "039_channel_containers.js", "040_tasks_fk_set_null.js", "041_plan_review_pending_emission.js", "042_schedule_type_once.js", "043_bg_tasks.js", "044_bg_tasks_pid.js"]) {
     try {
       const { run } = await import(`./db/migrations/${migFile}`);
       await run();
@@ -886,6 +886,23 @@ async function startup() {
         log(`[STARTUP] Migration ${migFile} note:`, err.message);
       }
     }
+  }
+
+  // Sweep bg_tasks left 'running' from a previous boot — their parent CLI is
+  // gone and won't emit task_notification anymore. Mark them 'orphaned' so
+  // the UI doesn't show stale rows.
+  try {
+    const swept = await pgQuery(
+      `UPDATE bg_tasks
+          SET status = 'orphaned', ended_at = NOW()
+        WHERE status = 'running'
+        RETURNING cli_task_id`
+    );
+    if (swept.rowCount > 0) {
+      log(`[STARTUP] swept ${swept.rowCount} orphaned bg_tasks from previous boot`);
+    }
+  } catch (err) {
+    log(`[STARTUP] bg_tasks sweep note: ${err.message}`);
   }
 
   // Ensure default conversation row exists (seed)
@@ -1083,6 +1100,15 @@ async function startup() {
     await initScheduler();
   } catch (err) {
     log("[STARTUP] Scheduler init note:", err.message);
+  }
+
+  // Start the bg watcher (polls bg_tasks PIDs via `kill -0` to detect
+  // completion independently of the parent CLI lifecycle).
+  try {
+    const { startBgWatcher } = await import("./lib/bg-watcher.js");
+    startBgWatcher();
+  } catch (err) {
+    log("[STARTUP] bg-watcher init note:", err.message);
   }
 
   // Start thread binding sweeper (cleanup every 5 min)

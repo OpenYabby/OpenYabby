@@ -1197,4 +1197,29 @@ router.post("/api/tasks/:id/archive", async (req, res) => {
   }
 });
 
+// List background tasks (Bash run_in_background jobs) attached to a Yabby task.
+router.get("/api/tasks/:id/bg-tasks", async (req, res) => {
+  try {
+    const { getBgTasksForTask } = await import("../db/queries/bg-tasks.js");
+    const rows = await getBgTasksForTask(req.params.id);
+    res.json({ bg_tasks: rows });
+  } catch (err) {
+    log("[BG-TASKS] task list error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// List background tasks for an agent (optional ?status=running filter).
+router.get("/api/agents/:id/bg-tasks", async (req, res) => {
+  try {
+    const { getBgTasksForAgent } = await import("../db/queries/bg-tasks.js");
+    const status = req.query.status || null;
+    const rows = await getBgTasksForAgent(req.params.id, { status });
+    res.json({ bg_tasks: rows });
+  } catch (err) {
+    log("[BG-TASKS] agent list error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 export default router;
