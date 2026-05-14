@@ -6,6 +6,25 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.1.3] — 2026-05-14
+
+### Added
+
+- **Exit-code aware bg task tracking.** New columns `exit_code`, `exit_signal`, `exit_file`, `is_service` (migration 045). The bookkeeper script wraps the user command so its exit code is captured (POSIX-portable). A `[bg:service]` tag in the tool's `description` marks long-lived servers — when they die, the agent gets `[BG_SERVICE_DIED]` instead of `[BG_COMPLETED]`. Non-zero exits routed as `[BG_FAILED]`.
+- **5 agent introspection tools.** `list_bg_tasks` (compact list, running first, status counts), `bg_task_detail` (full info for one cli_task_id), `get_bg_task_log` (read output with `tail` / `head` / `grep` modes, 64KB cap), `kill_bg_task` (SIGTERM→SIGKILL escalation), `register_external_bg` (track a process detached by external scripts like `start.sh`).
+- **Global `GET /api/bg-tasks`** endpoint joining `agents` for cross-agent visibility.
+- **Activity page split.** CLI events and Background Tasks now have their own scrollable section with running-first sort, status badges, elapsed timer, service marker, and 15s auto-refresh. All strings i18n'd (fr + en).
+- **`start.sh` convention.** The prompt now asks the lead to print each spawned service as `SERVICE <name> PID=<pid> PORT=<port>` and to register them with `register_external_bg` so the user sees them in the activity panel.
+
+### Fixed
+
+- **Orphaned `claude` processes from bg-task DB write races.** Fire-and-forget DB writes in `onBgTaskStarted` / `onBgTaskNotification` / close handler are now serialised via `lib/bg-write-tracker.js` (per-task `Set<Promise>`), so the close handler awaits all writes before `markOrphanedBgTasksDead` runs. Includes 5 Vitest cases. (Contributed by @AyonPal in #20.)
+- **`pause` and `intervene` left hung children reparented to init.** Both endpoints now escalate SIGTERM → SIGKILL after the grace window if `processHandles` still tracks the task. (Contributed by @AyonPal in #20.)
+- **Bookkeeper wrap broke on Python `f'...'` and nested quotes.** Replaced the double `sh -c` wrap (which applied the `'\''` escape twice) with a per-call bookkeeper script written to `/tmp/yabby-bg/<id>.sh`, invoked via `sh -c 'nohup .../bookkeeper.sh ... &'`. Zero shell escaping needed, exit code captured via `wait $C; $?`.
+- **Watchdog kill treated as failure in the notification branch.** When the FINAL_OUTPUT watchdog SIGTERMs a CLI cleanly (no bg active), the close handler's success branch now triggers (`code === 0 || killedAfterFinalOutput`) instead of falling into the error branch.
+- **Startup sweep blindly orphaned still-alive bg rows.** `server.js` now checks each `running` row's PID with `kill -0` before marking it orphaned, so long-running bg jobs survive a Yabby restart.
+- **`markOrphanedBgTasksDead` killed all `running` rows on CLI close.** Now PID-aware: rows whose PID is still alive stay `running` and the bg-watcher continues polling them.
+
 ## [0.1.2] — 2026-05-13
 
 ### Added
