@@ -62,21 +62,12 @@ success "npm $(npm -v) detected"
 # ══════════════════════════════════════════════════════════
 header "Infrastructure Mode"
 
-MODE="${1:-}"
+MODE="${1:-docker}"
 MODE_EXPLICIT=true
-if [ -z "$MODE" ]; then
+if [ $# -eq 0 ]; then
     MODE_EXPLICIT=false
-    echo "How would you like to run PostgreSQL and Redis?"
-    echo ""
-    echo "  ${BOLD}1) docker${NC}  — Use Docker Compose (recommended, zero config)"
-    echo "  ${BOLD}2) local${NC}   — Use locally installed PostgreSQL + Redis"
-    echo ""
-    read -rp "Choose [1/2]: " choice
-    case "$choice" in
-        1|docker)  MODE="docker" ;;
-        2|local)   MODE="local" ;;
-        *)         MODE="docker"; warn "Defaulting to docker mode" ;;
-    esac
+    info "No mode specified — defaulting to ${BOLD}docker${NC} (recommended)"
+    info "Run ${BOLD}./setup.sh local${NC} if you'd rather use your own PostgreSQL + Redis"
 fi
 
 # Returns first free TCP port >= $1 (max 100 attempts). Used to pre-fill
@@ -159,11 +150,17 @@ if [ -f ".env" ]; then
     success ".env file already exists — skipping creation"
     info "To reconfigure, edit .env manually or delete it and re-run setup"
 
-    # Ensure Docker PG credentials match docker-compose.yml
+    # Reconcile Docker creds even on re-run — earlier setup.sh versions only
+    # patched PG_PASSWORD, so stale PG_USER=postgres / PG_PORT=5432 from
+    # .env.example would silently misroute the app to whatever Postgres is
+    # on :5432 (e.g. brew Postgres without a "postgres" role → migration
+    # crashes with `role "postgres" does not exist`).
     if [ "$MODE" = "docker" ]; then
-        sed -i.bak "s/^PG_PASSWORD=$/PG_PASSWORD=yabby/" .env
+        sed -i.bak "s/^PG_USER=.*/PG_USER=yabby/" .env
+        sed -i.bak "s/^PG_PASSWORD=.*/PG_PASSWORD=yabby/" .env
+        sed -i.bak "s/^PG_DATABASE=.*/PG_DATABASE=yabby/" .env
         rm -f .env.bak
-        info "Verified PG_PASSWORD is set for Docker mode"
+        info "Reconciled PG_USER / PG_PASSWORD / PG_DATABASE for Docker mode"
     fi
 else
     info "Creating .env from .env.example..."
@@ -256,7 +253,18 @@ if [ "$MODE" = "docker" ]; then
     fi
 
     info "Starting PostgreSQL + Redis via Docker Compose..."
-    docker compose up -d postgres redis
+    if ! docker compose up -d postgres redis 2>&1 | tee /tmp/yabby-compose.log; then
+        if grep -qE "ports are not available|address already in use|port is already allocated" /tmp/yabby-compose.log; then
+            NEW_PG=$(find_free_port $((YABBY_PG_PORT + 1)))
+            NEW_REDIS=$(find_free_port $((YABBY_REDIS_PORT + 1)))
+            error "Port conflict starting Docker services."
+            echo "  Re-run with free ports:"
+            echo "    YABBY_PG_PORT=$NEW_PG YABBY_REDIS_PORT=$NEW_REDIS ./setup.sh docker"
+            exit 1
+        fi
+        error "docker compose up failed — see /tmp/yabby-compose.log"
+        exit 1
+    fi
 
     info "Waiting for services to be healthy..."
     # Wait for PostgreSQL

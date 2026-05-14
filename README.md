@@ -137,7 +137,12 @@ cd OpenYabby
 # -> http://localhost:3000
 ```
 
-The setup script handles everything: prerequisites check, `npm install`, `.env` creation (prompts for your OpenAI API key), infrastructure startup (Docker or local), and server launch. Run `./setup.sh docker` to use Docker Compose for PostgreSQL + Redis, or `./setup.sh local` if they're already running.
+The setup script handles everything: prerequisites check, `npm install`, `.env` creation (prompts for your OpenAI API key), infrastructure startup, and server launch. `./setup.sh` (no arg) defaults to **Docker mode** — Yabby's Postgres + Redis run in containers on non-default ports (`5433` / `6380`) so they never collide with your own local services. Pass `./setup.sh local` if you'd rather point Yabby at your own Postgres + Redis (you'll need to edit `.env` to match).
+
+**Optional add-ons** (auto-skip with a clear notice if requirements aren't met):
+
+- **Image generation** — Apple Silicon only, requires Python 3.10+ and ~8 GB free disk. The `generate_image` tool is unavailable on Intel/Linux/old-Python; `[ImageGen] ⏭ Skipped: ...` appears in the logs explaining why.
+- **Speaker verification** — voice biometric filtering. Requires Python 3.10+. Wake word still works without it (fail-open).
 
 ### Manual Setup
 
