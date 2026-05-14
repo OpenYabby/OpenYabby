@@ -14,6 +14,7 @@ let activeFilter = 'all';
 let pageSize = 100;
 let displayedCount = 0;
 let lastSeenTime = 0;  // timestamp of newest rendered event
+let bgRefreshTimer = null;
 
 export async function render(container) {
   activeFilter = 'all';
@@ -21,35 +22,62 @@ export async function render(container) {
   lastSeenTime = 0;
 
   container.innerHTML = `
-    <div class="activity-page">
-      <div class="activity-page-header">
-        <div>
-          <h2 class="activity-page-title">${t('activity.title')}</h2>
-          <p class="activity-page-subtitle">${t('activity.subtitle')}</p>
+    <div class="activity-page activity-page-vsplit">
+
+      <!-- ── TOP: CLI tasks ── -->
+      <section class="activity-section activity-section-cli">
+        <header class="activity-section-header">
+          <div>
+            <h2 class="activity-section-title">${t('activity.cliSectionTitle')}</h2>
+            <p class="activity-section-subtitle">${t('activity.cliSectionSubtitle')}</p>
+          </div>
+          <div class="activity-section-meta">
+            <div class="filter-pills" id="activityPageFilters">
+              <span class="filter-pill active" data-filter="all">${t('activity.filterAll')}</span>
+              <span class="filter-pill" data-filter="tool">${t('activity.filterTool')}</span>
+              <span class="filter-pill" data-filter="tool_result">${t('activity.filterResults')}</span>
+              <span class="filter-pill" data-filter="claude">${t('activity.filterClaude')}</span>
+              <span class="filter-pill" data-filter="status">${t('activity.filterStatus')}</span>
+              <span class="filter-pill" data-filter="error">${t('activity.filterError')}</span>
+              <span class="filter-pill" data-filter="notif">${t('activity.filterNotif')}</span>
+              <span class="filter-pill" data-filter="preview">${t('activity.filterPreview')}</span>
+            </div>
+            <div class="activity-page-count" id="activityPageCount"></div>
+          </div>
+        </header>
+
+        <div class="activity-section-scroll" id="cliScrollContainer">
+          <div class="activity-page-timeline" id="activityTimeline">
+            <div class="empty-state" style="padding: var(--space-xl);">${t('activity.waitingEvents')}</div>
+          </div>
+          <div class="activity-page-load-more" id="activityLoadMore" style="display:none">
+            <button class="btn btn-sm" id="activityLoadMoreBtn">${t('activity.loadMore')}</button>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="activity-page-filters">
-        <div class="filter-pills" id="activityPageFilters">
-          <span class="filter-pill active" data-filter="all">${t('activity.filterAll')}</span>
-          <span class="filter-pill" data-filter="tool">${t('activity.filterTool')}</span>
-          <span class="filter-pill" data-filter="tool_result">${t('activity.filterResults')}</span>
-          <span class="filter-pill" data-filter="claude">${t('activity.filterClaude')}</span>
-          <span class="filter-pill" data-filter="status">${t('activity.filterStatus')}</span>
-          <span class="filter-pill" data-filter="error">${t('activity.filterError')}</span>
-          <span class="filter-pill" data-filter="notif">${t('activity.filterNotif')}</span>
-          <span class="filter-pill" data-filter="preview">${t('activity.filterPreview')}</span>
+      <!-- ── BOTTOM: Background tasks ── -->
+      <section class="activity-section activity-section-bg">
+        <header class="activity-section-header">
+          <div>
+            <h2 class="activity-section-title">${t('activity.bgSectionTitle')}</h2>
+            <p class="activity-section-subtitle">${t('activity.bgSectionSubtitle')}</p>
+          </div>
+          <div class="activity-section-meta">
+            <div class="filter-pills" id="bgPanelFilters">
+              <span class="filter-pill active" data-bg-filter="running">${t('activity.bgFilterRunning')}</span>
+              <span class="filter-pill" data-bg-filter="all">${t('activity.bgFilterAll')}</span>
+            </div>
+            <div class="activity-page-count" id="bgPanelCount"></div>
+          </div>
+        </header>
+
+        <div class="activity-section-scroll" id="bgScrollContainer">
+          <div class="bg-panel-list" id="bgPanelList">
+            <div class="empty-state" style="padding: var(--space-md); font-size: var(--text-2xs);">${t('activity.bgLoading')}</div>
+          </div>
         </div>
-        <div class="activity-page-count" id="activityPageCount"></div>
-      </div>
-
-      <div class="activity-page-timeline" id="activityTimeline">
-        <div class="empty-state" style="padding: var(--space-xl);">${t('activity.waitingEvents')}</div>
-      </div>
-
-      <div class="activity-page-load-more" id="activityLoadMore" style="display:none">
-        <button class="btn btn-sm" id="activityLoadMoreBtn">${t('activity.loadMore')}</button>
-      </div>
+      </section>
     </div>
   `;
 
@@ -76,7 +104,122 @@ export async function render(container) {
   // Subscribe to live updates — incremental prepend, not full re-render
   const unsub = state.on('activities', onActivitiesChanged);
 
-  return () => { unsub(); };
+  // ── BG TASKS PANEL ──
+  let bgFilter = 'running';
+  document.querySelectorAll('#bgPanelFilters .filter-pill').forEach(p => {
+    p.addEventListener('click', () => {
+      bgFilter = p.dataset.bgFilter;
+      document.querySelectorAll('#bgPanelFilters .filter-pill').forEach(o => o.classList.remove('active'));
+      p.classList.add('active');
+      refreshBgPanel(bgFilter);
+    });
+  });
+
+  refreshBgPanel(bgFilter);
+  bgRefreshTimer = setInterval(() => refreshBgPanel(bgFilter), 15000);
+
+  // Refresh bg panel on relevant SSE events
+  const onBgEvent = () => refreshBgPanel(bgFilter);
+  state.addEventListener('sse:task', onBgEvent);
+
+  return () => {
+    unsub();
+    state.removeEventListener('sse:task', onBgEvent);
+    if (bgRefreshTimer) { clearInterval(bgRefreshTimer); bgRefreshTimer = null; }
+  };
+}
+
+async function refreshBgPanel(filter) {
+  const listEl = document.getElementById('bgPanelList');
+  const countEl = document.getElementById('bgPanelCount');
+  if (!listEl) return;
+  try {
+    const params = filter === 'running' ? '?status=running' : '?limit=50';
+    const res = await fetch(`/api/bg-tasks${params}`);
+    const data = await res.json();
+    const rows = data.bg_tasks || [];
+    if (countEl) {
+      const n = rows.length;
+      const plural = n !== 1 ? 's' : '';
+      countEl.textContent = t('activity.eventCount', { n, s: plural });
+    }
+    if (rows.length === 0) {
+      const emptyKey = filter === 'running' ? 'activity.bgEmptyRunning' : 'activity.bgEmpty';
+      listEl.innerHTML = `<div class="empty-state" style="padding: var(--space-md); font-size: var(--text-2xs);">${t(emptyKey)}</div>`;
+      return;
+    }
+    const locale = getLocale() === 'fr' ? 'fr-FR' : 'en-US';
+    listEl.innerHTML = rows.map(r => renderBgRow(r, locale)).join('');
+  } catch (err) {
+    listEl.innerHTML = `<div class="empty-state" style="padding: var(--space-md); color: var(--danger); font-size: var(--text-2xs);">${esc(err.message)}</div>`;
+  }
+}
+
+function renderBgRow(row, locale) {
+  const started = new Date(row.started_at);
+  const ended = row.ended_at ? new Date(row.ended_at) : null;
+  const now = Date.now();
+  const elapsedMs = (ended ? ended.getTime() : now) - started.getTime();
+  const elapsed = formatBgDuration(elapsedMs);
+  const startedStr = started.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+  const statusClass = bgStatusClass(row.status);
+  const statusLabel = bgStatusLabel(row.status);
+  const serviceBadge = row.is_service ? `<span class="bg-row-badge bg-row-badge-service">${t('activity.bgBadgeService')}</span>` : '';
+  const agentName = row.agent_name || (row.agent_id ? row.agent_id.slice(0, 8) : '—');
+  const desc = row.description || row.cli_task_id;
+  const exitInfo = row.exit_code !== null && row.exit_code !== undefined
+    ? `<span class="bg-row-exit">exit ${row.exit_code}</span>` : '';
+  const pidInfo = row.pid ? `<span class="bg-row-pid">pid ${row.pid}</span>` : '';
+
+  return `<div class="bg-row bg-row-${statusClass}">
+    <div class="bg-row-top">
+      <span class="bg-row-status badge badge-${statusClass}">${statusLabel}</span>
+      ${serviceBadge}
+      <span class="bg-row-elapsed">${elapsed}</span>
+    </div>
+    <div class="bg-row-desc" title="${esc(desc)}">${esc(desc.slice(0, 90))}</div>
+    <div class="bg-row-meta">
+      <span class="bg-row-agent">${esc(agentName)}</span>
+      ${pidInfo}
+      ${exitInfo}
+      <span class="bg-row-started">${startedStr}</span>
+    </div>
+  </div>`;
+}
+
+function formatBgDuration(ms) {
+  if (ms < 0) ms = 0;
+  const s = Math.floor(ms / 1000);
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m${s % 60 ? ' ' + (s % 60) + 's' : ''}`;
+  const h = Math.floor(m / 60);
+  return `${h}h${m % 60 ? ' ' + (m % 60) + 'm' : ''}`;
+}
+
+function bgStatusClass(s) {
+  switch (s) {
+    case 'running':      return 'running';
+    case 'completed':    return 'done';
+    case 'failed':       return 'error';
+    case 'service_died': return 'llm-limit';
+    case 'orphaned':     return 'muted';
+    case 'stopped':      return 'muted';
+    default:             return 'info';
+  }
+}
+
+function bgStatusLabel(s) {
+  switch (s) {
+    case 'running':      return t('activity.bgStatusRunning');
+    case 'completed':    return t('activity.bgStatusCompleted');
+    case 'failed':       return t('activity.bgStatusFailed');
+    case 'service_died': return t('activity.bgStatusServiceDied');
+    case 'orphaned':     return t('activity.bgStatusOrphaned');
+    case 'stopped':      return t('activity.bgStatusStopped');
+    default:             return s || '—';
+  }
 }
 
 function onActivitiesChanged(activities) {

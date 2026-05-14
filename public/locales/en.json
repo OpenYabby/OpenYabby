@@ -1102,6 +1102,22 @@
     "typeError": "Error",
     "typeNotif": "Notif",
     "typePreview": "Preview",
-    "typeEvent": "Event"
+    "typeEvent": "Event",
+    "cliSectionTitle": "CLI Tasks",
+    "cliSectionSubtitle": "Real-time event stream",
+    "bgSectionTitle": "Background Tasks",
+    "bgSectionSubtitle": "Processes running independently of CLI sessions",
+    "bgFilterRunning": "Running",
+    "bgFilterAll": "All",
+    "bgEmpty": "No background tasks",
+    "bgEmptyRunning": "No running tasks",
+    "bgLoading": "Loading…",
+    "bgStatusRunning": "Running",
+    "bgStatusCompleted": "Completed",
+    "bgStatusFailed": "Failed",
+    "bgStatusServiceDied": "Service stopped",
+    "bgStatusOrphaned": "Orphaned",
+    "bgStatusStopped": "Stopped",
+    "bgBadgeService": "service"
   }
 }

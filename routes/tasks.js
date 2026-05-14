@@ -1215,6 +1215,21 @@ router.post("/api/tasks/:id/archive", async (req, res) => {
   }
 });
 
+// Global list of bg tasks across all agents (joined with agent name).
+// Optional ?status=running to filter, ?limit=N (default 200).
+router.get("/api/bg-tasks", async (req, res) => {
+  try {
+    const { getAllBgTasks } = await import("../db/queries/bg-tasks.js");
+    const status = req.query.status || null;
+    const limit = Math.min(parseInt(req.query.limit || "200", 10) || 200, 500);
+    const rows = await getAllBgTasks({ status, limit });
+    res.json({ bg_tasks: rows });
+  } catch (err) {
+    log("[BG-TASKS] global list error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // List background tasks (Bash run_in_background jobs) attached to a Yabby task.
 router.get("/api/tasks/:id/bg-tasks", async (req, res) => {
   try {

@@ -1102,6 +1102,22 @@
     "typeError": "Erreur",
     "typeNotif": "Notif",
     "typePreview": "Preview",
-    "typeEvent": "Événement"
+    "typeEvent": "Événement",
+    "cliSectionTitle": "Tâches CLI",
+    "cliSectionSubtitle": "Flux d'événements en temps réel",
+    "bgSectionTitle": "Tâches en arrière-plan",
+    "bgSectionSubtitle": "Processus tournant indépendamment des sessions CLI",
+    "bgFilterRunning": "En cours",
+    "bgFilterAll": "Tout",
+    "bgEmpty": "Aucune tâche en arrière-plan",
+    "bgEmptyRunning": "Aucune tâche en cours",
+    "bgLoading": "Chargement…",
+    "bgStatusRunning": "En cours",
+    "bgStatusCompleted": "Terminée",
+    "bgStatusFailed": "Échec",
+    "bgStatusServiceDied": "Service arrêté",
+    "bgStatusOrphaned": "Orpheline",
+    "bgStatusStopped": "Arrêtée",
+    "bgBadgeService": "service"
   }
 }

@@ -140,7 +140,37 @@ Before attempting ANY tool you haven't used before: curl -s "http://localhost:${
 This is the ONLY authoritative catalog. NEVER guess tool names or parameters. If a tool doesn't appear in this list, it doesn't exist.
 All tools are callable via POST /api/tools/execute. Always include "context": {"agentId": "YOUR_AGENT_ID"} for media tools so files are delivered to your channel.
 
-USER FILES: Files sent by users (images, PDFs, docs) are stored automatically. Use get_channel_files to find them — it returns local paths you can read/process directly.`;
+USER FILES: Files sent by users (images, PDFs, docs) are stored automatically. Use get_channel_files to find them — it returns local paths you can read/process directly.
+
+BACKGROUND TASKS — MANDATORY METHOD
+For ANY long-running job (batch, script > 30s, server, watcher): use the Bash tool with run_in_background=true.
+The runtime tracks the PID, captures the exit code, and notifies you on completion:
+  [BG_COMPLETED] = exit 0 → confirm success to the user.
+  [BG_FAILED]    = non-zero or killed → diagnose from the output, report.
+  [BG_SERVICE_DIED] = a permanent service died (see below).
+For PERMANENT services (node server, php -S, streamlit, watchers): add the literal tag "[bg:service]" at the END of the description field. Example:
+  Bash(run_in_background=true, command="node server.js", description="dev preview server [bg:service]")
+FORBIDDEN — these bypass tracking, you will get NO notification:
+  • subprocess.Popen(..., start_new_session=True)
+  • nohup ... &
+  • setsid ... &
+  • disown
+  • any python -c "..." trick that detaches the child
+If your first attempt with run_in_background=true seems to fail (process gone in <2s), DO NOT switch to subprocess.Popen. Check the actual error in the tool output; fix the command itself.
+
+BG TASK INTROSPECTION & CONTROL — use these tools (preferred over ps/lsof/pgrep):
+  • list_bg_tasks          → compact list of your bg tasks (status counts + running first).
+  • bg_task_detail         → full info on ONE task by cli_task_id.
+  • get_bg_task_log        → read a task's output. Default = last 4 KB. Modes: 'tail' / 'head' / 'grep'(pattern). Hard cap 64 KB.
+  • kill_bg_task           → stop a running bg task by cli_task_id (SIGTERM then SIGKILL after 3s).
+  • register_external_bg   → register a process YOU just started but that the system doesn't know about (detached via a script's internal &, nohup, setsid, etc.). Provide its PID + description + is_service=true if it's a server.
+
+🟢 IMPORTANT: after running any script that starts a long-lived server in the background (typical "bash start.sh" patterns: "php -S ... &", "node server.js &", "streamlit run ... &"), you MUST register that server with register_external_bg so it appears in list_bg_tasks and the user can see it. Steps:
+  1. After the script returns, find the PID: PORT_PID=$(lsof -ti :PORT)
+  2. Call register_external_bg with {pid: PORT_PID, description: "...", is_service: true}
+Without this step, the user won't see the server in the activity panel even though it's running.
+
+When the user asks "is X still running?", "show me the logs", or "stop the server" — call the corresponding tool above.`;
 
 // Identity preamble for the Yabby super-agent: it owns project / standalone-
 // agent creation. Project leads and sub-agents do NOT — those belong to their
@@ -1040,6 +1070,279 @@ async function dispatchTool(toolName, args, context) {
     if (!agent) return { error: `Agent ${agentId} not found` };
 
     return await fetchJSON(`http://localhost:3000/api/agents/${agent.id}/queue`, 'GET');
+  }
+
+  if (toolName === 'list_bg_tasks') {
+    const targetAgentId = args.agent_id || context?.agentId || YABBY_ID;
+    let agent = await getAgent(targetAgentId);
+    if (!agent && args.agent_id) agent = await findAgentByName(args.agent_id);
+    if (!agent) return { error: `Agent ${targetAgentId} not found` };
+    const { getBgTasksForAgent } = await import('../db/queries/bg-tasks.js');
+    const { isPidAlive } = await import('../lib/bg-watcher.js');
+    const rows = await getBgTasksForAgent(agent.id, { status: args.status || null });
+
+    const now = Date.now();
+    const enriched = rows.map(r => {
+      const startMs = r.started_at ? new Date(r.started_at).getTime() : null;
+      const endMs = r.ended_at ? new Date(r.ended_at).getTime() : null;
+      const elapsedMs = startMs ? (endMs || now) - startMs : null;
+      const alive = r.status === 'running' && r.pid ? isPidAlive(r.pid) : false;
+      return {
+        cli_task_id: r.cli_task_id,
+        description: r.description,
+        status: r.status,
+        alive,                 // real-time PID check (running rows only)
+        is_service: r.is_service,
+        pid: r.pid,
+        exit_code: r.exit_code,
+        elapsed_s: elapsedMs !== null ? Math.round(elapsedMs / 1000) : null,
+        started_at: r.started_at,
+        ended_at: r.ended_at,
+      };
+    });
+
+    // Sort: running first (newest among running), then others by ended_at DESC
+    enriched.sort((a, b) => {
+      const aRun = a.status === 'running' ? 1 : 0;
+      const bRun = b.status === 'running' ? 1 : 0;
+      if (aRun !== bRun) return bRun - aRun;
+      const aT = a.ended_at || a.started_at;
+      const bT = b.ended_at || b.started_at;
+      return new Date(bT).getTime() - new Date(aT).getTime();
+    });
+
+    // Compact counts by status (helps the agent answer "anything running?" in 1 line)
+    const counts = {};
+    for (const r of enriched) counts[r.status] = (counts[r.status] || 0) + 1;
+
+    return {
+      agent_id: agent.id,
+      agent_name: agent.name,
+      filter_status: args.status || 'all',
+      total: enriched.length,
+      counts,
+      hint: enriched.length === 0 ? 'no bg tasks for this agent' : 'use bg_task_detail(cli_task_id) for full info, get_bg_task_log(cli_task_id) for output',
+      bg_tasks: enriched,
+    };
+  }
+
+  if (toolName === 'register_external_bg') {
+    const pid = Number(args.pid);
+    if (!Number.isInteger(pid) || pid <= 0) return { error: 'pid must be a positive integer' };
+    if (!args.description || typeof args.description !== 'string') return { error: 'description is required' };
+
+    const callerAgentId = context?.agentId || YABBY_ID;
+    const agent = await getAgent(callerAgentId);
+    if (!agent) return { error: `caller agent ${callerAgentId} not found` };
+
+    const { isPidAlive } = await import('../lib/bg-watcher.js');
+    if (!isPidAlive(pid)) {
+      return { error: `PID ${pid} is not alive (already exited or never existed). Cannot register a dead process.` };
+    }
+
+    // Resolve the agent's currently-active yabby task (needed for FK).
+    const { query: pgQuery } = await import('../db/pg.js');
+    const taskRow = await pgQuery(
+      `SELECT id, session_id FROM tasks WHERE id = $1`,
+      [agent.activeTaskId]
+    );
+    if (!taskRow.rows[0]) {
+      return { error: `caller agent has no active task — cannot attach bg_task row` };
+    }
+    const { id: yabbyTaskId, session_id: sessionId } = taskRow.rows[0];
+
+    // Synthesize a deterministic cli_task_id so the same PID doesn't get
+    // registered twice in quick succession (ON CONFLICT DO NOTHING handles it).
+    const cliTaskId = `ext_${pid}_${Date.now().toString(36)}`;
+
+    const { createBgTask, getBgTaskByCliId } = await import('../db/queries/bg-tasks.js');
+    const row = await createBgTask({
+      cliTaskId,
+      yabbyTaskId,
+      agentId: agent.id,
+      sessionId,
+      toolUseId: null,
+      description: args.description,
+      taskType: 'external',
+      pid,
+      pidFile: null,
+      exitFile: null,
+      isService: !!args.is_service,
+    });
+
+    if (!row) {
+      // Conflict: surface what's there.
+      const existing = await getBgTaskByCliId(cliTaskId);
+      return { error: 'failed to register', existing };
+    }
+
+    return {
+      registered: true,
+      cli_task_id: row.cli_task_id,
+      pid: row.pid,
+      is_service: row.is_service,
+      hint: 'the bg-watcher will poll this PID every 30s and notify you when it dies via [BG_COMPLETED] or [BG_SERVICE_DIED]',
+    };
+  }
+
+  if (toolName === 'bg_task_detail') {
+    const { getBgTaskByCliId } = await import('../db/queries/bg-tasks.js');
+    const { isPidAlive } = await import('../lib/bg-watcher.js');
+    const row = await getBgTaskByCliId(args.cli_task_id);
+    if (!row) return { error: `bg task ${args.cli_task_id} not found` };
+
+    const now = Date.now();
+    const startMs = row.started_at ? new Date(row.started_at).getTime() : null;
+    const endMs = row.ended_at ? new Date(row.ended_at).getTime() : null;
+    const elapsedMs = startMs ? (endMs || now) - startMs : null;
+    const alive = row.status === 'running' && row.pid ? isPidAlive(row.pid) : false;
+
+    // Best-effort: resolve agent name if available.
+    let agentName = null;
+    if (row.agent_id) {
+      try {
+        const a = await getAgent(row.agent_id);
+        agentName = a?.name || null;
+      } catch { /* non-fatal */ }
+    }
+
+    return {
+      cli_task_id: row.cli_task_id,
+      yabby_task_id: row.yabby_task_id,
+      tool_use_id: row.tool_use_id,
+      description: row.description,
+      task_type: row.task_type,
+      status: row.status,
+      alive,
+      is_service: row.is_service,
+      pid: row.pid,
+      exit_code: row.exit_code,
+      exit_signal: row.exit_signal,
+      elapsed_s: elapsedMs !== null ? Math.round(elapsedMs / 1000) : null,
+      started_at: row.started_at,
+      ended_at: row.ended_at,
+      output_file: row.output_file,
+      summary: row.summary,
+      agent_id: row.agent_id,
+      agent_name: agentName,
+      hint: 'use get_bg_task_log to read the output, kill_bg_task to stop a running one',
+    };
+  }
+
+  if (toolName === 'get_bg_task_log') {
+    const { getBgTaskByCliId } = await import('../db/queries/bg-tasks.js');
+    const row = await getBgTaskByCliId(args.cli_task_id);
+    if (!row) return { error: `bg task ${args.cli_task_id} not found` };
+    const meta = {
+      cli_task_id: row.cli_task_id,
+      status: row.status,
+      pid: row.pid,
+      exit_code: row.exit_code,
+      is_service: row.is_service,
+      description: row.description,
+      output_file: row.output_file,
+    };
+    if (!row.output_file) return { ...meta, log: null, note: "no output_file recorded for this bg task" };
+
+    const fs = await import('fs');
+    let stat;
+    try { stat = fs.statSync(row.output_file); }
+    catch { return { ...meta, log: null, note: "output file gone (cleaned up or never created)" }; }
+
+    const HARD_CAP = 65536;
+    const mode = args.mode || 'tail';
+    const total_size = stat.size;
+
+    if (mode === 'grep') {
+      const pattern = (args.pattern || '').toLowerCase();
+      if (!pattern) return { ...meta, error: "grep mode requires a 'pattern' arg" };
+      const maxLines = Math.min(args.max_lines || 100, 500);
+      const buf = fs.readFileSync(row.output_file, 'utf-8');
+      const matches = [];
+      for (const line of buf.split('\n')) {
+        if (line.toLowerCase().includes(pattern)) {
+          matches.push(line);
+          if (matches.length >= maxLines) break;
+        }
+      }
+      return { ...meta, mode, pattern, total_size, matches_count: matches.length, lines: matches };
+    }
+
+    const requested = args.bytes !== undefined ? args.bytes : 4096;
+    const slice_bytes = Math.min(Math.max(requested, 1), HARD_CAP);
+
+    let chunk;
+    if (mode === 'head') {
+      const fd = fs.openSync(row.output_file, 'r');
+      const len = Math.min(slice_bytes, total_size);
+      const b = Buffer.alloc(len);
+      fs.readSync(fd, b, 0, len, 0);
+      fs.closeSync(fd);
+      chunk = b.toString('utf-8');
+    } else {
+      const fd = fs.openSync(row.output_file, 'r');
+      const len = Math.min(slice_bytes, total_size);
+      const start = Math.max(0, total_size - len);
+      const b = Buffer.alloc(len);
+      fs.readSync(fd, b, 0, len, start);
+      fs.closeSync(fd);
+      chunk = b.toString('utf-8');
+    }
+
+    return {
+      ...meta,
+      mode,
+      total_size,
+      returned_bytes: chunk.length,
+      truncated: total_size > chunk.length,
+      log: chunk,
+    };
+  }
+
+  if (toolName === 'kill_bg_task') {
+    const { getBgTaskByCliId, markBgTaskExit } = await import('../db/queries/bg-tasks.js');
+    const row = await getBgTaskByCliId(args.cli_task_id);
+    if (!row) return { error: `bg task ${args.cli_task_id} not found` };
+    if (row.status !== 'running') {
+      return {
+        cli_task_id: row.cli_task_id,
+        already_done: true,
+        status: row.status,
+        note: `bg task already in terminal state '${row.status}', nothing to kill`
+      };
+    }
+    if (!row.pid) return { error: `bg task ${args.cli_task_id} has no PID recorded — cannot kill it` };
+
+    let sent = null;
+    try { process.kill(row.pid, 'SIGTERM'); sent = 'SIGTERM'; }
+    catch (err) {
+      if (err.code === 'ESRCH') {
+        await markBgTaskExit(row.cli_task_id, { status: 'stopped', summary: 'killed: process was already gone' });
+        return { cli_task_id: row.cli_task_id, already_dead: true, status: 'stopped' };
+      }
+      return { error: `kill SIGTERM failed: ${err.message}` };
+    }
+
+    // Wait up to 3s for graceful exit, then SIGKILL.
+    await new Promise((r) => setTimeout(r, 3000));
+    let stillAlive = true;
+    try { process.kill(row.pid, 0); } catch { stillAlive = false; }
+    if (stillAlive) {
+      try { process.kill(row.pid, 'SIGKILL'); sent = 'SIGTERM→SIGKILL'; }
+      catch (err) {
+        if (err.code !== 'ESRCH') return { error: `escalation SIGKILL failed: ${err.message}` };
+      }
+    }
+    await markBgTaskExit(row.cli_task_id, {
+      status: 'stopped',
+      summary: `killed by agent via kill_bg_task (${sent})`
+    });
+    return {
+      cli_task_id: row.cli_task_id,
+      pid: row.pid,
+      signal_sent: sent,
+      final_status: 'stopped'
+    };
   }
 
   if (toolName === 'create_agent_thread') {
