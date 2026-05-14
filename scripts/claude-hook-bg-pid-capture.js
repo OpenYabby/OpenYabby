@@ -1,31 +1,22 @@
 #!/usr/bin/env node
 /**
- * YABBY — Claude Code PreToolUse hook: capture bg PID via $$ + exec wrap.
+ * YABBY — PreToolUse hook: wrap Bash(run_in_background=true) so we can
+ * track the bg child's PID, exit code, and whether the agent meant it
+ * as a permanent service.
  *
- * When the agent calls `Bash(run_in_background=true)`, we wrap the command
- * so the spawned shell writes its own PID to a file before exec'ing the
- * real command:
+ * Wrap (POSIX, bash/zsh/dash/sh, macOS+Linux):
+ *   sh -c '<orig> & C=$!; echo $C > <pid>; wait $C; rc=$?; echo $rc > <exit>'
  *
- *   sh -c 'echo $$ > <pid_file>; exec <original>'
+ * Side channel for service intent: if tool_input.description ends with
+ * `[bg:service]`, drop an empty marker file at /tmp/yabby-bg/<id>.service.
  *
- * `$$` is the shell's PID. `exec` replaces the shell with the user command,
- * keeping the same PID. So the file content == the bg process's host-OS PID.
- *
- * The Yabby bg-watcher reads `<pid_file>` and runs `process.kill(pid, 0)`
- * to detect bg completion independently of the parent CLI's lifecycle.
- *
- * pid_file naming: /tmp/yabby-bg/<tool_use_id>.pid
- *   tool_use_id is set by Claude per tool call, unique and stable. The CLI
- *   emits the same id in the subsequent system.task_started event so the
- *   spawner can correlate.
- *
- * Fail-open: any error → exit 0 silently, command passes through unchanged.
- * Protocol: https://code.claude.com/docs/en/hooks
+ * Fail-open: any error → exit 0, command passes through unchanged.
  */
 
-import { mkdirSync, existsSync } from "fs";
+import { mkdirSync, existsSync, writeFileSync, chmodSync } from "fs";
 
 const PID_DIR = "/tmp/yabby-bg";
+const SERVICE_TAG = /\[bg:service\]\s*$/i;
 
 let input = "";
 process.stdin.on("data", (c) => (input += c));
@@ -33,36 +24,61 @@ process.stdin.on("end", () => {
   try {
     const { tool_name, tool_input, tool_use_id } = JSON.parse(input);
 
-    // Only Bash with run_in_background=true is relevant.
     if (tool_name !== "Bash") process.exit(0);
     if (!tool_input?.run_in_background) process.exit(0);
     if (!tool_input?.command || typeof tool_input.command !== "string") process.exit(0);
     if (!tool_use_id) process.exit(0);
 
-    // Ensure the pid dir exists.
-    if (!existsSync(PID_DIR)) {
-      mkdirSync(PID_DIR, { recursive: true, mode: 0o755 });
-    }
+    if (!existsSync(PID_DIR)) mkdirSync(PID_DIR, { recursive: true, mode: 0o755 });
 
     const pidFile = `${PID_DIR}/${tool_use_id}.pid`;
-    const original = tool_input.command;
+    const exitFile = `${PID_DIR}/${tool_use_id}.exit`;
+    const bookkeeperFile = `${PID_DIR}/${tool_use_id}.sh`;
 
-    // Escape single quotes inside the original command for the sh -c wrapper.
-    // Standard POSIX trick: '...'\''...'.
-    const escaped = original.replace(/'/g, "'\\''");
-    const wrapped = `sh -c 'echo $$ > ${pidFile}; exec sh -c '\\''${escaped}'\\'''`;
+    // Service marker via description tag — explicit agent-controlled channel,
+    // no regex on the command itself.
+    if (typeof tool_input.description === "string" && SERVICE_TAG.test(tool_input.description)) {
+      try { writeFileSync(`${PID_DIR}/${tool_use_id}.service`, ""); } catch {}
+    }
+
+    // Write a bookkeeper script that wraps the user command. Putting it in a
+    // file avoids ALL shell escape issues (Python f-strings, nested quotes,
+    // heredocs etc.) — the command is embedded verbatim.
+    //
+    // The bookkeeper:
+    //   1. Backgrounds the user command in a group `{ ... ; } &`
+    //   2. Records the child PID for the bg-watcher
+    //   3. Waits for the child and records its exit code
+    //
+    // The hook returns a command that detaches the bookkeeper via nohup + `&`
+    // so the Claude CLI's `run_in_background=true` sees a fast-returning tool
+    // call (otherwise the CLI emits task_notification:completed prematurely
+    // because the wrapper would block on `wait`).
+    const bookkeeperScript = [
+      `#!/bin/sh`,
+      `{ ${tool_input.command} ; } &`,
+      `C=$!`,
+      `echo $C > ${pidFile}`,
+      `wait $C`,
+      `rc=$?`,
+      `echo $rc > ${exitFile}`,
+      ``,
+    ].join("\n");
+    writeFileSync(bookkeeperFile, bookkeeperScript);
+    chmodSync(bookkeeperFile, 0o755);
+
+    const wrapped = `sh -c 'nohup ${bookkeeperFile} </dev/null >/dev/null 2>&1 &'`;
 
     process.stdout.write(JSON.stringify({
       hookSpecificOutput: {
         hookEventName: "PreToolUse",
         permissionDecision: "allow",
         updatedInput: { ...tool_input, command: wrapped },
-        additionalContext: `Yabby bg-watcher: PID will be captured in ${pidFile}`,
+        additionalContext: `Yabby bg-watcher: PID→${pidFile}, exit→${exitFile}`,
       },
     }));
     process.exit(0);
   } catch {
-    // Fail-open: original command passes through unchanged.
     process.exit(0);
   }
 });
