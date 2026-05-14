@@ -305,8 +305,16 @@ registerTaskControlRoute("pause", async (req, res) => {
   if (child) {
     try { killProcessTree(child, "SIGTERM"); } catch {}
 
-    // Clean up the handle after 3s (give the process time to terminate)
+    // After 3s grace, escalate to SIGKILL if the process is still tracked
+    // (close handler runs delete() only on actual exit). Without this
+    // escalation, a child that ignores SIGTERM survives the handle wipe and
+    // gets reparented to init — exactly the orphan signature that
+    // scripts/cleanup-zombies.sh exists to clean up.
     setTimeout(() => {
+      if (processHandles.has(task_id)) {
+        log(`[PAUSE] ${task_id} did not exit on SIGTERM — escalating to SIGKILL`);
+        try { killProcessTree(child, "SIGKILL"); } catch {}
+      }
       processHandles.delete(task_id);
       log(`[PAUSE] Cleaned up process handle for ${task_id}`);
     }, 3000);
@@ -397,13 +405,23 @@ registerTaskControlRoute("intervene", async (req, res) => {
       log(`[INTERVENE] Killing running task ${activeTaskId} (PID ${child.pid})`);
       try { killProcessTree(child, "SIGTERM"); } catch {}
 
-      // Wait briefly for the process to exit cleanly
-      await new Promise((resolve) => {
+      // Wait briefly for the process to exit cleanly. Resolve `true` on
+      // natural exit, `false` if the 2s hard timeout fires first — that
+      // distinction lets us escalate to SIGKILL instead of leaving an
+      // orphan reparented to init.
+      const exited = await new Promise((resolve) => {
         let done = false;
-        const onExit = () => { if (!done) { done = true; resolve(); } };
-        child.once("exit", onExit);
-        setTimeout(onExit, 2000); // Hard timeout 2s
+        const finish = (v) => { if (!done) { done = true; resolve(v); } };
+        child.once("exit", () => finish(true));
+        setTimeout(() => finish(false), 2000);
       });
+
+      if (!exited && processHandles.has(activeTaskId)) {
+        log(`[INTERVENE] ${activeTaskId} did not exit on SIGTERM — escalating to SIGKILL`);
+        try { killProcessTree(child, "SIGKILL"); } catch {}
+        // Brief grace so the kernel reaps before we resume the same taskId.
+        await new Promise((r) => setTimeout(r, 250));
+      }
 
       processHandles.delete(activeTaskId);
     }
