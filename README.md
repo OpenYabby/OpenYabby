@@ -123,8 +123,9 @@ If you want a minimal consumer voice app, this is probably too much. If you want
 | Requirement | Version |
 |-------------|---------|
 | Node.js | 20+ |
-| PostgreSQL | 14+ (database: `yabby`) |
-| Redis | 6+ (`localhost:6379`) |
+| Docker | Recommended — provides PostgreSQL 16 + Redis 7 via `./setup.sh` |
+| PostgreSQL | 14+ (only if you opt out of Docker via `./setup.sh local`) |
+| Redis | 6+ (only if you opt out of Docker via `./setup.sh local`) |
 | Claude CLI | `npm i -g @anthropic-ai/claude-code` |
 | OpenAI API key | Realtime API access |
 
@@ -425,8 +426,10 @@ Common issues and quick fixes. For deeper coverage see [docs/troubleshooting.md]
 |---|---|---|
 | `EADDRINUSE: port 3000` on startup | A previous Node instance is still bound | `lsof -ti :3000 \| xargs kill` then `npm start` |
 | `Claude CLI not found` in spawner logs | CLI not on `PATH`, or installed under a different name | `npm i -g @anthropic-ai/claude-code`, or set `CLAUDE_CMD=/full/path/to/claude` in `.env` |
-| `ECONNREFUSED 127.0.0.1:5432` | PostgreSQL is not running | `./setup.sh docker` or start your local Postgres; verify `PG_*` in `.env` match |
-| `ECONNREFUSED 127.0.0.1:6379` | Redis is not running | `./setup.sh docker`, or `brew services start redis` if installed locally |
+| `ECONNREFUSED 127.0.0.1:5433` (or `:5432` in local mode) | PostgreSQL container/service is not running | `./setup.sh docker` to start, or verify `PG_HOST`/`PG_PORT` in `.env` match your local Postgres |
+| `role "..." does not exist` on startup | App is talking to the wrong Postgres (e.g. brew Postgres on 5432 without a `yabby` role) | `./setup.sh docker` (recommended), or create the role manually: `createuser -s yabby && createdb -O yabby yabby` |
+| `ECONNREFUSED 127.0.0.1:6380` (or `:6379` in local mode) | Redis container/service is not running | `./setup.sh docker`, or `brew services start redis` and set `REDIS_URL=redis://localhost:6379` in `.env` |
+| `[ImageGen] ⏭ Skipped: ...` in dev logs | Imagegen preflight failed (non-Apple-Silicon, Python <3.10, low disk, or offline) | Optional — fix the reason shown in the skip line, or ignore if you don't need local image generation |
 | Wake word never triggers | Speaker service is off, or you haven't enrolled | Service is **fail-open** (still works without it). Run `npm run speaker` and enroll via the UI for biometric filtering |
 | Tunnel won't connect to `relay.openyabby.com` | No `RELAY_SECRET`, or you don't want a tunnel | Set `DISABLE_TUNNEL=true` in `.env` to silence; the app runs fine locally without it |
 | Tasks pause with status `paused_llm_limit` | Claude CLI hit its daily quota | Yabby auto-resumes after the reset window. See [migration 024](db/migrations/024_llm_limit_tasks.js) for the persisted resume metadata |
