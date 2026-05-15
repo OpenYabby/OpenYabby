@@ -882,8 +882,25 @@ async function startup() {
       const { run } = await import(`./db/migrations/${migFile}`);
       await run();
     } catch (err) {
-      if (!err.message.includes("already exists") && !err.message.includes("duplicate")) {
-        log(`[STARTUP] Migration ${migFile} note:`, err.message);
+      // Connection / auth / missing-DB errors: fail fast with a single clear
+      // message instead of logging 40+ "note:" lines and crashing later. These
+      // mean the app is talking to the wrong Postgres (or a Postgres that
+      // doesn't have the configured role/database).
+      const msg = err.message || "";
+      const fatal =
+        /role .* does not exist/i.test(msg) ||
+        /database .* does not exist/i.test(msg) ||
+        /password authentication failed/i.test(msg) ||
+        /connection refused|ECONNREFUSED/i.test(msg) ||
+        /server closed the connection/i.test(msg);
+      if (fatal) {
+        log(`[STARTUP] ❌ Cannot run migration ${migFile}: ${msg}`);
+        log(`[STARTUP]    Yabby is talking to the wrong Postgres or missing role/database.`);
+        log(`[STARTUP]    Fix: ./setup.sh docker   (or edit .env to point at a valid Postgres)`);
+        process.exit(1);
+      }
+      if (!msg.includes("already exists") && !msg.includes("duplicate")) {
+        log(`[STARTUP] Migration ${migFile} note:`, msg);
       }
     }
   }
