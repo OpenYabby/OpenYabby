@@ -129,6 +129,14 @@ If you want a minimal consumer voice app, this is probably too much. If you want
 | Claude CLI | `npm i -g @anthropic-ai/claude-code` |
 | OpenAI API key | Realtime API access |
 
+> ⚠️ **OpenAI Realtime API is required for chat.** OpenYabby's chat path...
+> (full text above)
+
+> ⚠️ **Claude CLI must be on `PATH` for task execution.**...
+> (full text above)
+
+### One-Command Setup
+
 ### One-Command Setup
 
 ```bash
