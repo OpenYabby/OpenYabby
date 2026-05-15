@@ -17,17 +17,23 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+    # Group patches into one PR per group, but let minor bumps come in
+    # individually. Minor versions on SDKs we depend on (anthropic, zod,
+    # google/genai, etc.) too often ship breaking changes that need
+    # case-by-case review and testing, grouping them masks the risk.
+    # @cloudflare/workers-types is excluded because it is being removed
+    # from the project (see #18).
     groups:
       production-deps:
         dependency-type: production
         update-types:
           - patch
-          - minor
+        exclude-patterns:
+          - "@cloudflare/workers-types"
       dev-deps:
         dependency-type: development
         update-types:
           - patch
-          - minor
 
   - package-ecosystem: github-actions
     directory: "/"
