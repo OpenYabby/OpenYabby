@@ -129,6 +129,14 @@ If you want a minimal consumer voice app, this is probably too much. If you want
 | Claude CLI | `npm i -g @anthropic-ai/claude-code` |
 | OpenAI API key | Realtime API access |
 
+> ⚠️ **OpenAI Realtime API is required for chat.** OpenYabby's chat path (UI and channels like Discord) routes through OpenAI's Realtime API via WebRTC. Without an OpenAI API key that has Realtime API access, the chat will fail — `/session` returns 500 and messages will not reach the agent. Other LLM providers you configure (Anthropic, Groq, Mistral, etc.) only power **internal** LLM calls (reformulation, hallucination detection, channel handlers) — they do not substitute for OpenAI on the chat path. This is the part most people miss when they see the multi-provider setup and assume any of them can drive the conversation.
+
+> ⚠️ **Claude CLI must be on `PATH` for task execution.** If the `claude` binary isn't installed or isn't reachable on your `PATH`, task creation will fail with:
+> - `Error: Process exited avec code -4058` on Windows (Windows's mapping for `ENOENT` in `child_process.spawn`)
+> - `Error: spawn claude ENOENT` or plain `ENOENT` on macOS / Linux
+>
+> Install with `npm i -g @anthropic-ai/claude-code` and verify with `claude --version` before running `npm start`. If you have it installed at a custom path, set `CLAUDE_CMD=/full/path/to/claude` in `.env`.
+
 ### One-Command Setup
 
 ```bash
