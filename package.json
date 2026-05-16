@@ -54,7 +54,6 @@
     "@supabase/supabase-js": "^2.105.1",
     "@whiskeysockets/baileys": "7.0.0-rc.9",
     "better-sqlite3": "^12.8.0",
-    "cloudflare": "^5.2.0",
     "cloudflare": "^4.2.0",
     "cors": "^2.8.5",
     "cron-parser": "^5.5.0",
