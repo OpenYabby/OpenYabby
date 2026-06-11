@@ -103,6 +103,9 @@ import imagegenRouter from "./routes/imagegen.js";
 import systemRouter from "./routes/system.js";
 import voiceRouter from "./routes/voice.js";
 
+// Experience Layer
+import experienceRouter from "./routes/experience.js";
+
 // WebSocket
 import { initWebSocket, broadcastWs, closeWebSocket } from "./lib/ws-gateway.js";
 import { setWsBroadcast } from "./lib/logger.js";
@@ -178,6 +181,7 @@ app.use(presentationsRouter);
 app.use(toolsRouter);
 app.use(systemRouter);
 app.use(voiceRouter);
+app.use("/api/experience", experienceRouter);
 
 // ==================== CONVERSATION ENDPOINTS ====================
 

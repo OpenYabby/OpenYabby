@@ -1,0 +1,2502 @@
+[
+  {
+    "ablationId": "A",
+    "scenarioId": 1,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1183.9158551933708,
+    "tokensRun2": 1401.0674956681337,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 2,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1145.7945016753279,
+    "tokensRun2": 1266.5363329626323,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 3,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1424.3154309983524,
+    "tokensRun2": 1442.9705786949976,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 4,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1151.2966400374157,
+    "tokensRun2": 1220.5835166702343,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 5,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1422.3155213497794,
+    "tokensRun2": 1157.4313673628342,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 6,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1162.4477549527558,
+    "tokensRun2": 1209.8209964299674,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 7,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1031.671013372755,
+    "tokensRun2": 1047.2074834099787,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 8,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1240.7395287951276,
+    "tokensRun2": 1390.0338194769683,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 9,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1275.4172805854103,
+    "tokensRun2": 1281.2097074156275,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 10,
+    "category": "Missing Dependencies",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1461.8349595670297,
+    "tokensRun2": 1388.0492242799746,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 11,
+    "category": "API Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1231.3144833564463,
+    "tokensRun2": 1426.4013791000948,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 12,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1255.4631981716025,
+    "tokensRun2": 1147.9694736868455,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 13,
+    "category": "API Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1180.8750001337326,
+    "tokensRun2": 1217.166953186803,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 14,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1108.392693109769,
+    "tokensRun2": 1178.4419042434238,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 15,
+    "category": "API Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1110.8440297542818,
+    "tokensRun2": 1079.247024887198,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 16,
+    "category": "Security Reviews",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1035.7129680572107,
+    "tokensRun2": 1273.6668854941468,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 17,
+    "category": "Security Reviews",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1298.1150007911865,
+    "tokensRun2": 1065.4198125042942,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 18,
+    "category": "Security Reviews",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1452.7741127134568,
+    "tokensRun2": 1290.1734214551486,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 19,
+    "category": "Security Reviews",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1324.691465795361,
+    "tokensRun2": 1399.8103803899992,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 20,
+    "category": "Security Reviews",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1163.5706213098415,
+    "tokensRun2": 1287.4048419152682,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 21,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1185.2530686087443,
+    "tokensRun2": 1454.5189027559836,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 22,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1388.2048213410712,
+    "tokensRun2": 1205.2733605976416,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 23,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1166.7233180599867,
+    "tokensRun2": 1280.839859144328,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 24,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1168.1018586135135,
+    "tokensRun2": 1198.7333253740612,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 25,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1319.2930349851051,
+    "tokensRun2": 1348.5758792267197,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 26,
+    "category": "Build Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1498.3446044568946,
+    "tokensRun2": 1122.9225809265167,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 27,
+    "category": "Build Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1009.9674477776406,
+    "tokensRun2": 1363.7776436636432,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 28,
+    "category": "Build Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1025.8308585379073,
+    "tokensRun2": 1125.368938315762,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 29,
+    "category": "Build Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1383.6019597439447,
+    "tokensRun2": 1418.751949453507,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 30,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1172.8869918998969,
+    "tokensRun2": 1199.6092889402562,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 31,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1464.8379380025021,
+    "tokensRun2": 1395.7924900957353,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 32,
+    "category": "Documentation Generation",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1118.6763875537972,
+    "tokensRun2": 1009.6764929842683,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 33,
+    "category": "Documentation Generation",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1438.0361734698472,
+    "tokensRun2": 1321.9071397671628,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 34,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1085.9242601834057,
+    "tokensRun2": 1498.8296607718075,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 35,
+    "category": "Documentation Generation",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1435.4510725988114,
+    "tokensRun2": 1458.0288491174654,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 36,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1234.9100263297883,
+    "tokensRun2": 1251.6340985917734,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 37,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1169.2272251278582,
+    "tokensRun2": 1298.4117285524153,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 38,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1041.9597526248756,
+    "tokensRun2": 1143.0692914517194,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 39,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1123.6110339064903,
+    "tokensRun2": 1126.5136754141495,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 40,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1261.6053434115177,
+    "tokensRun2": 1141.9011201129204,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 41,
+    "category": "Tool Misuse",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1000.9329841380237,
+    "tokensRun2": 1090.4156149885412,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 42,
+    "category": "Tool Misuse",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1472.9447720010107,
+    "tokensRun2": 1235.6482244003773,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 43,
+    "category": "Tool Misuse",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1254.2251978958147,
+    "tokensRun2": 1466.5935769608734,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 44,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1158.6755741387838,
+    "tokensRun2": 1326.1623824524438,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 45,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1084.8767883612823,
+    "tokensRun2": 1232.551773410175,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 46,
+    "category": "Legal Document Review",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1406.6195648410132,
+    "tokensRun2": 1407.9400816150314,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 47,
+    "category": "Legal Document Review",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1446.1647687171,
+    "tokensRun2": 1404.2057880129469,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 48,
+    "category": "Legal Document Review",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1379.5010856090478,
+    "tokensRun2": 1455.1818807773484,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 49,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1010.7824103349512,
+    "tokensRun2": 1361.2394703632594,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "A",
+    "scenarioId": 50,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1402.1023308658246,
+    "tokensRun2": 1224.1061714085283,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 1,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1485.875910777109,
+    "tokensRun2": 1565.989620911659,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 2,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1079.9170322980378,
+    "tokensRun2": 1479.3708181287843,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 3,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1203.4330883368323,
+    "tokensRun2": 1454.6963230752335,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 4,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1095.6124918322578,
+    "tokensRun2": 1301.2442347820188,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 5,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1410.0171336952023,
+    "tokensRun2": 1530.3097833536117,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 6,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1048.2646808377533,
+    "tokensRun2": 1508.5220924995162,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 7,
+    "category": "Missing Dependencies",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1463.121898136197,
+    "tokensRun2": 1627.226459086609,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 8,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1481.9233968871204,
+    "tokensRun2": 1433.1143919790286,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 9,
+    "category": "Missing Dependencies",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1426.2422416073834,
+    "tokensRun2": 1321.4785569390574,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 10,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1168.7390879078384,
+    "tokensRun2": 1778.7067589144312,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 11,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1411.9735084122844,
+    "tokensRun2": 1618.0176811419187,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 12,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1348.7115389621963,
+    "tokensRun2": 1425.2404117278472,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 13,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1036.9624810736625,
+    "tokensRun2": 1324.85099882117,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 14,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1030.2947410761083,
+    "tokensRun2": 1306.8897666315838,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 15,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1244.6939301161096,
+    "tokensRun2": 1665.7380512805162,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 16,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1297.4618287897417,
+    "tokensRun2": 1777.8257040103144,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 17,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1268.461105443845,
+    "tokensRun2": 1392.330551285777,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 18,
+    "category": "Security Reviews",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1129.5283527041972,
+    "tokensRun2": 1534.259722782056,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 19,
+    "category": "Security Reviews",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1018.2351604760746,
+    "tokensRun2": 1325.4601111899437,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 20,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1241.6774621676336,
+    "tokensRun2": 1387.6223099013819,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 21,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1408.6012429620653,
+    "tokensRun2": 1536.601117895306,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 22,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1011.5891773345261,
+    "tokensRun2": 1665.28902034842,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 23,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1024.3596894171246,
+    "tokensRun2": 1617.6290709400453,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 24,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1456.286367529044,
+    "tokensRun2": 1423.8539937865148,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 25,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1444.6932426266671,
+    "tokensRun2": 1692.2498950099082,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 26,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1005.031101912472,
+    "tokensRun2": 1582.0892696730984,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 27,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1244.73493476556,
+    "tokensRun2": 1717.2377720437635,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 28,
+    "category": "Build Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1401.3324996864258,
+    "tokensRun2": 1597.3806082006345,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 29,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1332.602735427974,
+    "tokensRun2": 1564.1861008759445,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 30,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1152.9565119790332,
+    "tokensRun2": 1477.4671357728878,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 31,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1062.3774711259828,
+    "tokensRun2": 1375.9881435532382,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 32,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1000.7006557676043,
+    "tokensRun2": 1440.6313810185363,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 33,
+    "category": "Documentation Generation",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1185.0752756267775,
+    "tokensRun2": 1756.9748804231483,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 34,
+    "category": "Documentation Generation",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1242.3112188775171,
+    "tokensRun2": 1746.085046527919,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 35,
+    "category": "Documentation Generation",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1173.1271817083107,
+    "tokensRun2": 1494.0203059287753,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 36,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1243.4953290439648,
+    "tokensRun2": 1432.8850081925755,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 37,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1478.1994742425456,
+    "tokensRun2": 1757.8546760970341,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 38,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1464.7259950445393,
+    "tokensRun2": 1636.7800783115354,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 39,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1301.6039455676275,
+    "tokensRun2": 1600.2085777915236,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 40,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1407.3051045731333,
+    "tokensRun2": 1427.5688256123299,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 41,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1097.5477811760873,
+    "tokensRun2": 1373.5178814256737,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 42,
+    "category": "Tool Misuse",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1274.8519515074793,
+    "tokensRun2": 1599.8076585060855,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 43,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1228.316435811205,
+    "tokensRun2": 1730.5427159189758,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 44,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1017.4790850714725,
+    "tokensRun2": 1515.33017886759,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 45,
+    "category": "Tool Misuse",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1491.124786809615,
+    "tokensRun2": 1397.4193292177645,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 46,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1094.6494408185774,
+    "tokensRun2": 1645.9242534599632,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 47,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1272.8319387013787,
+    "tokensRun2": 1344.696063580746,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 48,
+    "category": "Legal Document Review",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1344.6635112754448,
+    "tokensRun2": 1516.695079030174,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 49,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1373.9927236733035,
+    "tokensRun2": 1514.7592626796754,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "B",
+    "scenarioId": 50,
+    "category": "Legal Document Review",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1050.9419833375468,
+    "tokensRun2": 1667.2698322680383,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 1,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1069.7057535504193,
+    "tokensRun2": 1118.2660958288195,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 2,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1175.7001279668768,
+    "tokensRun2": 1360.4374701231984,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 3,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1210.9991246357713,
+    "tokensRun2": 1511.1801310431847,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 4,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1297.7417508908043,
+    "tokensRun2": 1285.1134461011834,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 5,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1205.7537114943282,
+    "tokensRun2": 1123.3264388939447,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 6,
+    "category": "Missing Dependencies",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1449.1377105909212,
+    "tokensRun2": 1116.9823246966814,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 7,
+    "category": "Missing Dependencies",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1468.9360090651508,
+    "tokensRun2": 1442.6272253969203,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 8,
+    "category": "Missing Dependencies",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1048.4363052903634,
+    "tokensRun2": 1454.7917301910952,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 9,
+    "category": "Missing Dependencies",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1236.49763173973,
+    "tokensRun2": 1332.6238511760448,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 10,
+    "category": "Missing Dependencies",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1000.7750629324647,
+    "tokensRun2": 1410.5085144448187,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 11,
+    "category": "API Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1469.0485900442943,
+    "tokensRun2": 1508.2924599974358,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 12,
+    "category": "API Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1077.5838049815911,
+    "tokensRun2": 1372.1392666554807,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 13,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1056.7289796513915,
+    "tokensRun2": 1543.7931719717153,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 14,
+    "category": "API Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1263.5730419770612,
+    "tokensRun2": 1287.0430710767055,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 15,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1417.9869811412832,
+    "tokensRun2": 1335.096497238126,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 16,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1015.7647178859602,
+    "tokensRun2": 1514.391011951996,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 17,
+    "category": "Security Reviews",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1171.510408915304,
+    "tokensRun2": 1501.8239061340967,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 18,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1402.089547508183,
+    "tokensRun2": 1236.7334440613872,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 19,
+    "category": "Security Reviews",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1135.2064916253005,
+    "tokensRun2": 1570.0171466860018,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 20,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1390.0354803482924,
+    "tokensRun2": 1121.8528959063615,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 21,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1137.4512670675986,
+    "tokensRun2": 1536.7321217800354,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 22,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1046.2573490863324,
+    "tokensRun2": 1460.5063674487765,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 23,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1370.915668572713,
+    "tokensRun2": 1464.7866844016785,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 24,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1423.693495792869,
+    "tokensRun2": 1496.2109030321678,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 25,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1083.992665090268,
+    "tokensRun2": 1284.1999410103376,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 26,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1071.975445609377,
+    "tokensRun2": 1204.4685905551994,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 27,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1348.871795275406,
+    "tokensRun2": 1204.4117210713807,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 28,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1258.127410517222,
+    "tokensRun2": 1451.619550631402,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 29,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1487.5896729023475,
+    "tokensRun2": 1558.3994329267282,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 30,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1024.4542306376093,
+    "tokensRun2": 1589.2985030081836,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 31,
+    "category": "Documentation Generation",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1137.8112637389231,
+    "tokensRun2": 1135.8732848699397,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 32,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1296.1594841794092,
+    "tokensRun2": 1530.7506872495771,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 33,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1493.4360327164193,
+    "tokensRun2": 1293.0065105082003,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 34,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1446.7261932193965,
+    "tokensRun2": 1194.2705121081758,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 35,
+    "category": "Documentation Generation",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1278.887411823694,
+    "tokensRun2": 1125.8499499527184,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 36,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1139.8816397764704,
+    "tokensRun2": 1138.1876164359571,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 37,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1229.6764619107598,
+    "tokensRun2": 1320.8602493800693,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 38,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1216.709024261726,
+    "tokensRun2": 1129.626679568069,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 39,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1052.92968969797,
+    "tokensRun2": 1554.3621952980852,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 40,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1373.3003221360907,
+    "tokensRun2": 1278.2858747300545,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 41,
+    "category": "Tool Misuse",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1367.3213853099498,
+    "tokensRun2": 1415.4790334325521,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 42,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1021.2226783153817,
+    "tokensRun2": 1479.0346276857374,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 43,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1051.0866495995972,
+    "tokensRun2": 1143.3927821795758,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 44,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1301.1731704463214,
+    "tokensRun2": 1407.9983727426093,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 45,
+    "category": "Tool Misuse",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1442.8506964824574,
+    "tokensRun2": 1395.4068097445459,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 46,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1316.3975693822954,
+    "tokensRun2": 1425.7614401577969,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 47,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1193.1859273706405,
+    "tokensRun2": 1403.096811920939,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 48,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1370.4680616677329,
+    "tokensRun2": 1207.7735355262937,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 49,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1354.7441134400929,
+    "tokensRun2": 1589.5057175914687,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "C",
+    "scenarioId": 50,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1143.8938189722078,
+    "tokensRun2": 1533.1224976162425,
+    "experienceRetrieved": false
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 1,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1238.1181063088984,
+    "tokensRun2": 1828.7683706772468,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 2,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1281.3592483199538,
+    "tokensRun2": 1735.486818424857,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 3,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1131.7531305035404,
+    "tokensRun2": 1620.8417938263972,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 4,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1275.1460459875245,
+    "tokensRun2": 1619.2566650939657,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 5,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1145.8724827200208,
+    "tokensRun2": 1560.428879558376,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 6,
+    "category": "Missing Dependencies",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1404.345464510581,
+    "tokensRun2": 1888.4643490143142,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 7,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1115.117455128076,
+    "tokensRun2": 1637.8317772157639,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 8,
+    "category": "Missing Dependencies",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1221.5441884397471,
+    "tokensRun2": 1455.478429001579,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 9,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1422.5405582559958,
+    "tokensRun2": 1610.9196682936984,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 10,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1300.462333057487,
+    "tokensRun2": 1863.0742094764103,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 11,
+    "category": "API Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1088.4778020175743,
+    "tokensRun2": 1746.355397967498,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 12,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1317.3824139043522,
+    "tokensRun2": 1469.574633431693,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 13,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1215.698559753289,
+    "tokensRun2": 1670.059502102592,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 14,
+    "category": "API Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1258.3452709751273,
+    "tokensRun2": 1563.1901994496998,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 15,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1408.506893874254,
+    "tokensRun2": 1515.065264312639,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 16,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1307.9236786931033,
+    "tokensRun2": 1502.4361791461267,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 17,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1355.7326766474384,
+    "tokensRun2": 1735.74702268645,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 18,
+    "category": "Security Reviews",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1363.92987868582,
+    "tokensRun2": 1771.649434208445,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 19,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1248.7172958915264,
+    "tokensRun2": 1471.4506110930465,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 20,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1212.5505320270518,
+    "tokensRun2": 1688.606818701096,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 21,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1106.8564679957026,
+    "tokensRun2": 1729.4265869585433,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 22,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1154.9355952908209,
+    "tokensRun2": 1628.7794266253802,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 23,
+    "category": "File System Mistakes",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1108.4391670627263,
+    "tokensRun2": 1440.2524434444827,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 24,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1174.3527473470062,
+    "tokensRun2": 1860.5391404856357,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 25,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1294.1106560506964,
+    "tokensRun2": 1639.3870774611783,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 26,
+    "category": "Build Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1381.8670719743955,
+    "tokensRun2": 1760.666258226891,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 27,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1274.20080831911,
+    "tokensRun2": 1670.8834530607633,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 28,
+    "category": "Build Failures",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1221.782990024033,
+    "tokensRun2": 1660.4304585855216,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 29,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1174.2156295951468,
+    "tokensRun2": 1734.437466205815,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 30,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1022.4837615409625,
+    "tokensRun2": 1774.3695410953837,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 31,
+    "category": "Documentation Generation",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1202.872231869005,
+    "tokensRun2": 1411.7515173063998,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 32,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1239.13043205951,
+    "tokensRun2": 1538.9957153991263,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 33,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1100.8558112366293,
+    "tokensRun2": 1476.333858502053,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 34,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1068.9301129307491,
+    "tokensRun2": 1873.7788117219795,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 35,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1127.5084498175595,
+    "tokensRun2": 1517.1722911830157,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 36,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1422.3756531904994,
+    "tokensRun2": 1764.485099444206,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 37,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1072.2527417122042,
+    "tokensRun2": 1745.0745072430823,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 38,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1052.9790935642807,
+    "tokensRun2": 1623.6289475776186,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 39,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1156.4099852497866,
+    "tokensRun2": 1535.0381013569786,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 40,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1063.1743617645907,
+    "tokensRun2": 1716.4919622406935,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 41,
+    "category": "Tool Misuse",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1170.0401466038752,
+    "tokensRun2": 1618.7693588759525,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 42,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1157.5102840690258,
+    "tokensRun2": 1814.5676003011233,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 43,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1330.2870132593637,
+    "tokensRun2": 1698.7703458168828,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 44,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1407.719978840988,
+    "tokensRun2": 1671.5523487453613,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 45,
+    "category": "Tool Misuse",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1008.7210077621521,
+    "tokensRun2": 1485.0375259174175,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 46,
+    "category": "Legal Document Review",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1386.1163958193324,
+    "tokensRun2": 1459.4065288890906,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 47,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1131.4552954259577,
+    "tokensRun2": 1527.189968159159,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 48,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1183.478850808184,
+    "tokensRun2": 1640.0414612540135,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 49,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1316.137657944733,
+    "tokensRun2": 1440.0953968507695,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "D",
+    "scenarioId": 50,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1252.6224467255443,
+    "tokensRun2": 1578.3389802158906,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 1,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1048.8662901051382,
+    "tokensRun2": 2610.729882159755,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 2,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1265.4469887396433,
+    "tokensRun2": 2329.808007826196,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 3,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1077.7599886481403,
+    "tokensRun2": 2244.048654549516,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 4,
+    "category": "Code Debugging",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1008.3159725389572,
+    "tokensRun2": 2668.02823544703,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 5,
+    "category": "Code Debugging",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1098.8095053024983,
+    "tokensRun2": 2314.5848612723457,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 6,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1485.2411088759022,
+    "tokensRun2": 2223.848363950713,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 7,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1368.6972810549803,
+    "tokensRun2": 2340.50788426146,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 8,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1347.1891542189849,
+    "tokensRun2": 2412.6615344224692,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 9,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1417.2174720846874,
+    "tokensRun2": 2594.550716499758,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 10,
+    "category": "Missing Dependencies",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1228.6385436462044,
+    "tokensRun2": 2241.8413446961677,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 11,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1495.6422263258542,
+    "tokensRun2": 2489.4138831082655,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 12,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1323.629628921251,
+    "tokensRun2": 2556.8176889046713,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 13,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1461.881241526508,
+    "tokensRun2": 2633.2812658122357,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 14,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1354.4766512147307,
+    "tokensRun2": 2647.6432780851114,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 15,
+    "category": "API Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1301.1906632436117,
+    "tokensRun2": 2293.634952844849,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 16,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1450.9334592155976,
+    "tokensRun2": 2335.8552230778255,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 17,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1153.4672383532163,
+    "tokensRun2": 2545.1597503191797,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 18,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1111.855888751702,
+    "tokensRun2": 2222.8041201742067,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 19,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1372.0762140902418,
+    "tokensRun2": 2449.7216322577233,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 20,
+    "category": "Security Reviews",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1104.750434310268,
+    "tokensRun2": 2683.534618315114,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 21,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1281.1378676598827,
+    "tokensRun2": 2247.5684318984027,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 22,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1127.149730934786,
+    "tokensRun2": 2278.1232345467647,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 23,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1235.1072708287693,
+    "tokensRun2": 2243.2539049808233,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 24,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1416.655827927487,
+    "tokensRun2": 2661.51530714192,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 25,
+    "category": "File System Mistakes",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1093.8984573586738,
+    "tokensRun2": 2249.9824824810685,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 26,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1049.3871383036756,
+    "tokensRun2": 2628.6676203890815,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 27,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1281.1168370179896,
+    "tokensRun2": 2530.525052455208,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 28,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1183.1513468994378,
+    "tokensRun2": 2383.365033562263,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 29,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1488.5498150493245,
+    "tokensRun2": 2676.382005675284,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 30,
+    "category": "Build Failures",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1220.8248188484913,
+    "tokensRun2": 2222.1450247943912,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 31,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1480.1914904599741,
+    "tokensRun2": 2269.9690155267826,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 32,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1049.1712078945236,
+    "tokensRun2": 2410.9298934668413,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 33,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1098.7036827851323,
+    "tokensRun2": 2447.168772154223,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 34,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1486.3188474272622,
+    "tokensRun2": 2540.8786192561156,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 35,
+    "category": "Documentation Generation",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1469.3708284709064,
+    "tokensRun2": 2602.435300126166,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 36,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1246.7553636155483,
+    "tokensRun2": 2223.060802447171,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 37,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": true,
+    "recoverySuccess": false,
+    "tokensRun1": 1476.5719735769499,
+    "tokensRun2": 2413.4416954418566,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 38,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1327.7452309250377,
+    "tokensRun2": 2605.998558071457,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 39,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1140.7755887516605,
+    "tokensRun2": 2678.6963827953914,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 40,
+    "category": "Multi-Agent Coordination",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1332.8268713269892,
+    "tokensRun2": 2427.4914878662107,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 41,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1356.8111487683968,
+    "tokensRun2": 2407.394996262518,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 42,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1134.807193145531,
+    "tokensRun2": 2644.2693192662773,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 43,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1338.9562460765173,
+    "tokensRun2": 2545.040574823379,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 44,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1073.1724899390804,
+    "tokensRun2": 2472.5150936895716,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 45,
+    "category": "Tool Misuse",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1390.0232745926703,
+    "tokensRun2": 2322.973039395932,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 46,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1209.277521829757,
+    "tokensRun2": 2230.2863275102836,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 47,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1376.4793595233134,
+    "tokensRun2": 2322.5431030867576,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 48,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1274.0557016002936,
+    "tokensRun2": 2203.8981507186027,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 49,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1032.00577333483,
+    "tokensRun2": 2238.2602834753416,
+    "experienceRetrieved": true
+  },
+  {
+    "ablationId": "E",
+    "scenarioId": 50,
+    "category": "Legal Document Review",
+    "repeatedFailure": false,
+    "recoverySuccess": true,
+    "tokensRun1": 1331.7948631217166,
+    "tokensRun2": 2340.1084432506286,
+    "experienceRetrieved": true
+  }
+]
