@@ -44,7 +44,7 @@
     "@anthropic-ai/sdk": "^0.91.1",
     "@azure/identity": "^4.13.1",
     "@azure/search-documents": "^12.2.0",
-    "@cloudflare/workers-types": "^4.20260426.1",
+    "@cloudflare/workers-types": "^4.20260629.1",
     "@google/genai": "^1.50.1",
     "@langchain/core": "^1.1.42",
     "@mistralai/mistralai": "^1.15.1",
